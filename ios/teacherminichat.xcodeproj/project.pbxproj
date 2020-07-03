@@ -16,6 +16,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* teacherminichatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* teacherminichatTests.m */; };
+		324D01B624AFE585009A52BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 324D01B524AFE585009A52BE /* GoogleService-Info.plist */; };
 		373AC91DD52EBD48AB8E0E1C /* libPods-teacherminichat-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EA86D02AC83306321C1F69 /* libPods-teacherminichat-tvOS.a */; };
 		877B9B3C70243D3716B0946C /* libPods-teacherminichat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDFB4C255B2EDD4F2C2E42C6 /* libPods-teacherminichat.a */; };
 		DA82D7EAC2CAA522F90DA420 /* libPods-teacherminichat-teacherminichatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 458694AC075A9B4DA9B04CFD /* libPods-teacherminichat-teacherminichatTests.a */; };
@@ -45,7 +46,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* teacherminichatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = teacherminichatTests.m; sourceTree = "<group>"; };
 		0E1713F81B73BC7CA58317D1 /* Pods-teacherminichat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teacherminichat.release.xcconfig"; path = "Target Support Files/Pods-teacherminichat/Pods-teacherminichat.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* teacherminichat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teacherminichat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* TeacherMiniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeacherMiniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = teacherminichat/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = teacherminichat/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = teacherminichat/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* teacherminichat-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "teacherminichat-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* teacherminichat-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "teacherminichat-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		324D01B524AFE585009A52BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../__files__/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		458694AC075A9B4DA9B04CFD /* libPods-teacherminichat-teacherminichatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-teacherminichat-teacherminichatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5716A12D8EDBF537F7A1B830 /* Pods-teacherminichat-teacherminichatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teacherminichat-teacherminichatTests.release.xcconfig"; path = "Target Support Files/Pods-teacherminichat-teacherminichatTests/Pods-teacherminichat-teacherminichatTests.release.xcconfig"; sourceTree = "<group>"; };
 		60BA1EB9DB85728E3D5F133A /* Pods-teacherminichat-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teacherminichat-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-teacherminichat-tvOSTests/Pods-teacherminichat-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				324D01B524AFE585009A52BE /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -174,7 +177,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* teacherminichat.app */,
+				13B07F961A680F5B00A75B9A /* TeacherMiniChat.app */,
 				00E356EE1AD99517003FC87E /* teacherminichatTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* teacherminichat-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* teacherminichat-tvOSTests.xctest */,
@@ -194,7 +197,6 @@
 				60BA1EB9DB85728E3D5F133A /* Pods-teacherminichat-tvOSTests.debug.xcconfig */,
 				E876238D48A3C4CECD98131B /* Pods-teacherminichat-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -237,7 +239,7 @@
 			);
 			name = teacherminichat;
 			productName = teacherminichat;
-			productReference = 13B07F961A680F5B00A75B9A /* teacherminichat.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* TeacherMiniChat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* teacherminichat-tvOS */ = {
@@ -340,6 +342,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				324D01B624AFE585009A52BE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,13 +640,14 @@
 				);
 				INFOPLIST_FILE = teacherminichat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = teacherminichat;
+				PRODUCT_BUNDLE_IDENTIFIER = me.calhau.teacherminichat;
+				PRODUCT_NAME = TeacherMiniChat;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -659,13 +663,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = teacherminichat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = teacherminichat;
+				PRODUCT_BUNDLE_IDENTIFIER = me.calhau.teacherminichat;
+				PRODUCT_NAME = TeacherMiniChat;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
