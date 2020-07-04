@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { authenticate, authenticationIsVerified } from '../../store/actions'
-import { User as UserStorage } from '../localstorage'
+import { User as UserStorage } from '../../services/localstorage'
 
 const useLocalProfile = (dispatch) => {
   useEffect(() => {
@@ -9,8 +9,9 @@ const useLocalProfile = (dispatch) => {
 
       if (profile && profile.uid) {
         dispatch(authenticate(profile))
-        dispatch(authenticationIsVerified())
       }
+
+      dispatch(authenticationIsVerified())
     }
 
     verifyProfile()

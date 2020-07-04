@@ -1,20 +1,41 @@
-import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
-import { User as UserStorage } from '../../modules/localstorage'
+import React, { useContext } from 'react'
+import { store } from '../../store'
+import {
+  Body, ButtonLogout, Container, Header, HeaderBody,
+  HeaderIcon, Title, UserName, UserType
+} from './styled'
+import { logout } from '../../services/firebase'
+import { User as UserStorage } from '../../services/localstorage'
 
 function Chats ({ navigation }) {
-  useEffect(() => {
-    const getProfile = async () => {
-      console.tron('root.profile', await UserStorage.get())
-    }
+  const { dispatch, state: { user } } = useContext(store)
 
-    getProfile()
-  }, []) // eslint-disable-line
+  function handleLogout () {
+    logout(dispatch)
+
+    UserStorage.delete()
+    navigation.navigate('SignIn')
+  }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Chat</Text>
-    </View>
+    <Container>
+      <Header>
+        <HeaderIcon name='user' />
+
+        <HeaderBody>
+          <UserName>{user.name}</UserName>
+          <UserType>{user.accountType}</UserType>
+        </HeaderBody>
+
+        <ButtonLogout onPress={handleLogout}>
+          <HeaderIcon name='logout' />
+        </ButtonLogout>
+      </Header>
+
+      <Body>
+        <Title>Chats</Title>
+      </Body>
+    </Container>
   )
 }
 

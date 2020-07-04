@@ -1,6 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
 export const User = {
+  delete: async () => {
+    return AsyncStorage.removeItem('user').then(() => true)
+  },
   get: async () => {
     return AsyncStorage.getItem('user').then(JSON.parse)
   },

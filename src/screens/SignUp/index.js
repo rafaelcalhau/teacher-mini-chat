@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Keyboard } from 'react-native'
 import { Snackbar } from 'react-native-paper'
-import auth from '@react-native-firebase/auth'
 import { store } from '../../store'
 import { Container, Content, CustomButton, Input, Logo, RadioGroup, Title } from './styled'
-import { User as UserStorage } from '../../modules/localstorage'
+import { User as UserStorage } from '../../services/localstorage'
 import { isValidEmail, formatUserData } from '../../modules/utils'
+import { signup, updateProfile } from '../../services/firebase'
 import { authenticate } from '../../store/actions'
 
 function SignUp ({ navigation }) {
@@ -41,8 +41,7 @@ function SignUp ({ navigation }) {
       setIsAuthenticating(true)
 
       const displayName = name
-      const { user } = await auth()
-        .createUserWithEmailAndPassword(email, password)
+      const { user } = await signup(email, password)
         .catch(error => {
           const errorCode = error.code
           const errorMessage = error.message
@@ -55,7 +54,7 @@ function SignUp ({ navigation }) {
         })
 
       // Register the name
-      auth().currentUser.updateProfile({ displayName })
+      updateProfile({ displayName })
 
       if (user) {
         const profile = formatUserData({ ...user._user, displayName })

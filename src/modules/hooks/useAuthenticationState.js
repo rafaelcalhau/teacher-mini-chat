@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import auth from '@react-native-firebase/auth'
 import { authenticate, authenticationIsVerified, signout } from '../../store/actions'
-import { User as UserStorage } from '../localstorage'
+import { User as UserStorage } from '../../services/localstorage'
 import { formatUserData } from '../utils'
 
 const useAuthenticationState = (dispatch) => {

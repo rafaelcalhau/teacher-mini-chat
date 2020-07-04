@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Keyboard } from 'react-native'
 import { Snackbar } from 'react-native-paper'
-import auth from '@react-native-firebase/auth'
+import { signin } from '../../services/firebase'
+import { User as UserStorage } from '../../services/localstorage'
 import { store } from '../../store'
 import { authenticate } from '../../store/actions'
 import { isValidEmail, formatUserData } from '../../modules/utils'
@@ -30,9 +31,8 @@ function SignIn ({ navigation }) {
     } else {
       setIsAuthenticating(true)
 
-      await auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(user => dispatch(authenticate(formatUserData(user))))
+      const { user } = await signin(email, password)
+        // .then(user => dispatch(authenticate(formatUserData(user))))
         .catch(error => {
           const errorCode = error.code
           const errorMessage = error.message
@@ -47,6 +47,16 @@ function SignIn ({ navigation }) {
             console.tron('[signInWithEmailAndPassword] error', errorMessage)
           }
         })
+
+      if (user) {
+        const profile = formatUserData({ ...user._user })
+        dispatch(authenticate(profile))
+
+        // Register user on local storage
+        UserStorage.put(profile)
+      } else {
+        setSnack('Sorry, something wrong happened.')
+      }
 
       setIsAuthenticating(false)
     }
