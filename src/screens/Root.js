@@ -1,14 +1,21 @@
-import { useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
+import { ActivityIndicator } from 'react-native'
 import { store } from '../store'
 
 function Root ({ navigation }) {
   const { state } = useContext(store)
-  useEffect(() => {
-    console.tron(state)
-    navigation.navigate('SignIn')
-  }, [state]) // eslint-disable-line
+  const { authenticationVerified, user } = state
 
-  return null
+  useEffect(() => {
+    console.tron('state', { authenticationVerified, user })
+
+    if (authenticationVerified) {
+      navigation.navigate('SignIn')
+    }
+
+  }, [authenticationVerified]) // eslint-disable-line
+
+  return <ActivityIndicator />
 }
 
 export default Root

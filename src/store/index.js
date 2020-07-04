@@ -3,6 +3,7 @@ import useAuthenticationState from './../modules/hooks/useAuthenticationState'
 import ActionTypes from './types'
 
 const initialState = {
+  authenticationVerified: false,
   user: {}
 }
 
@@ -16,6 +17,11 @@ const StateProvider = ({ children }) => {
         return {
           ...state,
           user: action.user
+        }
+      case ActionTypes.AUTHENTICATION_VERIFIED:
+        return {
+          ...state,
+          authenticationVerified: true
         }
       case ActionTypes.SIGN_OUT:
         return {

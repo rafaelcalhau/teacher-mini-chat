@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import auth from '@react-native-firebase/auth'
-import { authenticate, signout } from '../../store/actions'
+import { authenticate, authenticationIsVerified, signout } from '../../store/actions'
 
 const useAuthenticationState = (dispatch) => {
   console.tron('[useAuthenticationState] initiated')
@@ -14,6 +14,8 @@ const useAuthenticationState = (dispatch) => {
       } else {
         dispatch(signout(user))
       }
+
+      dispatch(authenticationIsVerified())
     })
 
     // onUnmount

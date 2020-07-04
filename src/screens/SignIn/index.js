@@ -2,7 +2,7 @@ import React from 'react'
 import { Keyboard } from 'react-native'
 import { Container, CustomButton, Input, Logo, Title } from './styled'
 
-function SignIn () {
+function SignUp () {
   return (
     <Container onTouchStart={() => Keyboard.dismiss()}>
       <Logo />
@@ -17,7 +17,6 @@ function SignIn () {
       <Input
         align='center'
         label='Your password'
-        margin='15px 0 0 0'
         width='80%'
       />
 
@@ -27,4 +26,4 @@ function SignIn () {
   )
 }
 
-export default SignIn
+export default SignUp
