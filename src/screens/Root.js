@@ -1,18 +1,24 @@
 import React, { useEffect, useContext } from 'react'
 import { ActivityIndicator, View } from 'react-native'
+import useLocalProfile from '../modules/hooks/useLocalProfile'
 import { store } from '../store'
 
 function Root ({ navigation }) {
-  const { state } = useContext(store)
+  const { dispatch, state } = useContext(store)
   const { authenticationVerified, user } = state
 
+  // Authenticate user with local data
+  useLocalProfile(dispatch)
+
+  // Redirect after verifiy local user profile
   useEffect(() => {
-    console.tron('state', { authenticationVerified, user })
-
     if (authenticationVerified) {
-      navigation.navigate('SignIn')
+      if (!user.uid) {
+        navigation.navigate('SignIn')
+      } else {
+        navigation.navigate('Chats')
+      }
     }
-
   }, [authenticationVerified]) // eslint-disable-line
 
   return (

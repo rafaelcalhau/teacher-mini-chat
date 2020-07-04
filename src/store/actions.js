@@ -1,8 +1,7 @@
 import ActionTypes from './types'
 
 export const authenticate = (user) => {
-  const payload = user
-  return { type: ActionTypes.AUTHENTICATED, payload }
+  return { type: ActionTypes.AUTHENTICATED, user }
 }
 
 export const authenticationIsVerified = () => {

@@ -6,7 +6,8 @@ export const Button = styled.TouchableOpacity`
   background-color: ${({ outline, theme }) => outline ? 'white' : theme.colors.primary};
   border-color: ${({ theme }) => theme.colors.primary};
   border-width: 1px;
-  padding: 15px;
+  height: 48px;
+  justify-content: center;
   width: ${({ width }) => width || '100%'}
 `
 

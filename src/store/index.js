@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react'
-import useAuthenticationState from './../modules/hooks/useAuthenticationState'
+// import auth from '@react-native-firebase/auth'
 import ActionTypes from './types'
 
 const initialState = {
@@ -33,7 +33,7 @@ const StateProvider = ({ children }) => {
     };
   }, initialState)
 
-  useAuthenticationState(dispatch)
+  // auth().signOut()
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>
 }

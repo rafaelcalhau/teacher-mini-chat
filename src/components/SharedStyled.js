@@ -7,7 +7,8 @@ const behavior = Platform.select({
 })
 
 export const KeyboardAvoidingView = styled.KeyboardAvoidingView.attrs({
-  behavior
+  behavior,
+  enabled: Platform.OS === 'ios'
 })``
 
 export const SafeAreaView = styled.SafeAreaView`

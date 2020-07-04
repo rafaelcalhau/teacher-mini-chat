@@ -1,5 +1,5 @@
 import styled from 'styled-components/native'
-import { Text } from '../../components/SharedStyled'
+import { Text } from '../SharedStyled'
 
 export const Container = styled.View`
   align-items: center;
@@ -10,16 +10,15 @@ export const Container = styled.View`
 
 export const Label = styled(Text)`
   align-self: stretch;
+  margin-bottom: 10px;
   text-align: ${({ align }) => align || 'left'}
   width: ${({ width }) => width || '100%'}
 `
 
-export const TextInput = styled.TextInput`
-  align-self: stretch;
-  border-bottom-color: ${({ theme }) => theme.colors.gray};
-  border-bottom-width: 1px;
-  color: ${({ theme }) => theme.colors.text.default};
-  font-size: 16px;
-  padding: 5px;
-  text-align: ${({ align }) => align || 'left'}
+export const Options = styled.View`
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: ${({ horizontal }) => horizontal ? 'row' : 'column'};
+  justify-content: ${({ align }) => align || 'flex-start'};
+  width: 100%
 `

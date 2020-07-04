@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'
 import React from 'react'
 import { StatusBar } from 'react-native'
 import { ThemeProvider } from 'styled-components'
+import { Provider as PaperProvider } from 'react-native-paper'
 import { SafeAreaView } from './components/SharedStyled'
 import { StateProvider } from './store'
 import theme from './theme'
@@ -14,7 +15,9 @@ function App () {
       <SafeAreaView>
         <StateProvider>
           <ThemeProvider theme={theme}>
-            <Router />
+            <PaperProvider>
+              <Router />
+            </PaperProvider>
           </ThemeProvider>
         </StateProvider>
       </SafeAreaView>

@@ -1,25 +1,28 @@
 import { useEffect } from 'react'
 import auth from '@react-native-firebase/auth'
 import { authenticate, authenticationIsVerified, signout } from '../../store/actions'
+import { User as UserStorage } from '../localstorage'
+import { formatUserData } from '../utils'
 
 const useAuthenticationState = (dispatch) => {
-  console.tron('[useAuthenticationState] initiated')
   // didMount
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(user => {
-      console.tron('[useAuthenticationState] onAuthStateChanged...', user)
-
+    // auth().signOut()
+    auth().onAuthStateChanged(async user => {
       if (user) {
-        dispatch(authenticate(user))
+        const formattedUser = formatUserData(user)
+        const profile = await UserStorage.get()
+        const data = { ...profile, ...formattedUser }
+
+        console.tron('[useAuthenticationState]')
+        await UserStorage.put(data)
+        dispatch(authenticate(data))
       } else {
         dispatch(signout(user))
       }
 
       dispatch(authenticationIsVerified())
     })
-
-    // onUnmount
-    return subscriber
   }, []) // eslint-disable-line
 }
 
