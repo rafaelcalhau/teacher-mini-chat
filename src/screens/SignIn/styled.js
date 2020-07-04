@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { Text } from '../../components/SharedStyled'
 
 export const Container = styled.View`
   align-items: center;
@@ -14,6 +15,7 @@ export const Logo = styled.Image.attrs({
   width: 183px;
 `
 
-export const Title = styled.Text`
+export const Title = styled(Text)`
   font-size: 16px;
+  font-weight: bold
 `
