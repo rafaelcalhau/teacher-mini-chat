@@ -6,14 +6,22 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "pod": "cd ios && pod install && cd ..",
+    "postinstall": "jetifier -r",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-community/masked-view": "^0.1.10",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-reanimated": "^1.9.0",
+    "react-native-safe-area-context": "^3.0.7",
+    "react-native-screens": "^2.9.0",
+    "react-navigation": "^4.4.0",
+    "react-navigation-stack": "^2.8.2",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
@@ -23,6 +31,7 @@
     "babel-jest": "^26.1.0",
     "eslint": "^7.4.0",
     "jest": "^26.1.0",
+    "jetifier": "^1.6.6",
     "metro-react-native-babel-preset": "^0.60.0",
     "react-test-renderer": "16.11.0",
     "reactotron-react-native": "^5.0.0"
