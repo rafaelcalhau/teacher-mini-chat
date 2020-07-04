@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { store } from '../store'
 
 function Root ({ navigation }) {
@@ -15,7 +15,11 @@ function Root ({ navigation }) {
 
   }, [authenticationVerified]) // eslint-disable-line
 
-  return <ActivityIndicator />
+  return (
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <ActivityIndicator />
+    </View>
+  )
 }
 
 export default Root
