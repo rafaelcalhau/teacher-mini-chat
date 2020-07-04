@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react'
+import useAuthenticationState from './../modules/hooks/useAuthenticationState'
 import ActionTypes from './types'
 
 const initialState = {
@@ -25,6 +26,8 @@ const StateProvider = ({ children }) => {
         throw new Error()
     };
   }, initialState)
+
+  useAuthenticationState(dispatch)
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>
 }
