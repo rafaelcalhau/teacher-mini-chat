@@ -1,18 +1,22 @@
 import React from 'react'
 import {
-  Avatar, Badge, Body, Container, Details,
-  LastMessage, Name, Time
+  Avatar, AvatarView, Badge, Body, Container,
+  Details, Icon, LastMessage, Name, Time
 } from './styled'
 
 function Contact (props) {
   const { onPress } = props
-  const { lastMessage, name, newMessages } = props.data
+  const { accountType, lastMessage, name, newMessages } = props.data
   const handlePress = onPress || (() => null)
+  const iconName = accountType === 'alumni' ? 'user-graduate' : 'user-tie'
   const image = props.image || require('../../../assets/alumni-avatar-small.png')
 
   return (
     <Container onPress={handlePress}>
-      <Avatar source={image} />
+      <AvatarView>
+        <Avatar source={image} />
+        <Icon size={14} name={iconName} />
+      </AvatarView>
       <Body>
         <Name>{name}</Name>
         {lastMessage.length > 0 && <LastMessage>{lastMessage}</LastMessage>}

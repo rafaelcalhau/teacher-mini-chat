@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5'
 import { Avatar as PaperAvatar, Badge as PaperBadge } from 'react-native-paper'
 import { Text } from '../../../components/SharedStyled'
 
@@ -6,6 +7,12 @@ export const Avatar = styled(PaperAvatar.Image).attrs({
   size: 36
 })`
   background-color: transparent
+`
+
+export const AvatarView = styled.View`
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 5px
 `
 
 export const Badge = styled(PaperBadge)`
@@ -32,8 +39,17 @@ export const Details = styled.View`
   width: 50px
 `
 
+export const Icon = styled(FontAwesomeIcon)`
+  color: ${({ theme }) => theme.colors.darkgray};
+  bottom: -8px;
+  padding: 5px;
+  position: absolute;
+  right: -5px;
+  z-index: 9;
+`
+
 export const Name = styled(Text)`
-  color: ${({ theme }) => theme.colors.silver}
+  color: ${({ theme }) => theme.colors.silver};
   font-size: 14px;
 `
 
