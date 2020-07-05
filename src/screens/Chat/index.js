@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Platform } from 'react-native'
+import { NativeModules, Platform } from 'react-native'
 import { Snackbar } from 'react-native-paper'
 import { store } from '../../store'
 import { Loader } from '../../components/SharedStyled'
-import Message from './Message'
 import {
   Avatar, BackIcon, Body, Container, Form, FormControls, FormIcons,
-  Header, HeaderBody, IconButton, Input, Messages, UserName,
+  Header, HeaderBody, IconButton, Input, UserName,
   UserType, Wrapper
 } from './styled'
 import {
   getLastMessages, sendMessage,
   subscribeToNewMessages, unsubscribeToNewMessages
 } from '../../services/firebase'
+import ChatList from './ChatList'
 
 function Chat ({ navigation }) {
   const { state: { user } } = useContext(store)
@@ -22,6 +22,7 @@ function Chat ({ navigation }) {
   const [messagesLoaded, setMessagesLoaded] = useState(false)
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
   const [text, setText] = useState('')
+  const [statusBarHeight, setStatusBarHeight] = useState(0)
 
   function handleDismissSnackBar () {
     handleSnackbar({ visible: false, text: '' })
@@ -34,24 +35,11 @@ function Chat ({ navigation }) {
 
     await sendMessage(user.uid, chatKey, text)
     setText('')
+    // chatListRef.scrollToEnd(true)
   }
 
   function renderAvatar () {
     return contact.image || require('../../assets/alumni-avatar-small.png')
-  }
-
-  function renderMessages () {
-    if (!messagesLoaded) {
-      return null
-    }
-
-    return (
-      <Messages
-        data={(messages || [])}
-        keyExtractor={(item) => String(item.createdAt)}
-        renderItem={({ item }) => <Message data={item} self={item.from === user.uid} />}
-      />
-    )
   }
 
   // function setSnack (text = '') {
@@ -70,12 +58,19 @@ function Chat ({ navigation }) {
 
       setMessages(newMessages)
       setMessagesLoaded(true)
+
+      // chatListRef.scrollToEnd(true)
     }
 
     const subscription = subscribeToNewMessages(chatKey, message => {
-      console.tron('subscription.message', message)
       setMessages(messages => [...messages, message])
+      // chatListRef.scrollToEnd(true)
     })
+
+    const { StatusBarManager } = NativeModules
+
+    StatusBarManager
+      .getHeight((statusBarFrameData) => setStatusBarHeight(statusBarFrameData.height))
 
     loadMessages()
 
@@ -86,7 +81,7 @@ function Chat ({ navigation }) {
   return (
     <Wrapper
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={44}
+      keyboardVerticalOffset={statusBarHeight}
     >
       <Container>
         <Header>
@@ -102,12 +97,10 @@ function Chat ({ navigation }) {
           </HeaderBody>
         </Header>
 
+        {!messagesLoaded && <Loader />}
+
         <Body>
-          {
-            !messagesLoaded
-              ? <Loader />
-              : renderMessages()
-          }
+          <ChatList data={messages} userUid={user.uid} />
         </Body>
 
         <Snackbar
@@ -116,30 +109,36 @@ function Chat ({ navigation }) {
         >
           {snackbar.text}
         </Snackbar>
-      </Container>
-      <Form>
-        <Input placeholder='Send a message...' onChangeText={setText} value={text} />
-        <FormControls>
-          {
-            text.length === 0
-              ? (
-                <>
-                  <IconButton>
-                    <FormIcons.Camera />
-                  </IconButton>
 
-                  <IconButton>
-                    <FormIcons.Mic />
+        <Form>
+          <Input
+            placeholder='Send a message...'
+            onChangeText={setText}
+            value={text}
+          />
+
+          <FormControls>
+            {
+              text.length === 0
+                ? (
+                  <>
+                    <IconButton>
+                      <FormIcons.Camera />
+                    </IconButton>
+
+                    <IconButton>
+                      <FormIcons.Mic />
+                    </IconButton>
+                  </>
+                ) : (
+                  <IconButton onPress={handleSend}>
+                    <FormIcons.Send />
                   </IconButton>
-                </>
-              ) : (
-                <IconButton onPress={handleSend}>
-                  <FormIcons.Send />
-                </IconButton>
-              )
-          }
-        </FormControls>
-      </Form>
+                )
+            }
+          </FormControls>
+        </Form>
+      </Container>
     </Wrapper>
   )
 }

@@ -1,5 +1,4 @@
 import styled from 'styled-components/native'
-import { FlatList } from 'react-native'
 import LineIcon from 'react-native-vector-icons/SimpleLineIcons'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 import { Avatar as PaperAvatar } from 'react-native-paper'
@@ -13,7 +12,10 @@ export const Avatar = styled(PaperAvatar.Image).attrs({
 `
 
 export const Body = styled.View`
-  flex: 1
+  flex: 1;
+  padding: 5px;
+  border-bottom-color: transparent;
+  border-bottom-width: 50px;
 `
 
 export const BackIcon = styled(IonIcon).attrs({
@@ -24,7 +26,6 @@ export const BackIcon = styled(IonIcon).attrs({
 
 export const Container = styled.View`
   flex: 1;
-  padding: 0 20px;
 `
 
 export const Form = styled.View`
@@ -33,6 +34,11 @@ export const Form = styled.View`
   flex-direction: row;
   height: 50px;
   padding-left: 10px;
+  position: absolute;
+  z-index: 9;
+  bottom: 0;
+  right: 0;
+  left: 0
 `
 
 export const FormControls = styled.View`
@@ -68,7 +74,7 @@ export const Header = styled.View`
   align-items: center;
   flex-direction: row;
   height: 82px;
-  margin-bottom: 25px
+  margin: 0 10px 25px
 `
 
 export const HeaderBody = styled.View`
@@ -96,10 +102,6 @@ export const Input = styled.TextInput.attrs({
   flex: 1;
   padding: 0 20px;
   height: 34px
-`
-
-export const Messages = styled(FlatList)`
-  margin: 25px 0
 `
 
 export const UserName = styled(Text)`
