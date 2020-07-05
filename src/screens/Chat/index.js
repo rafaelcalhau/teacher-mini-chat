@@ -1,0 +1,146 @@
+import React, { useContext, useEffect, useState } from 'react'
+import { NativeModules, Platform } from 'react-native'
+import { Snackbar } from 'react-native-paper'
+import { store } from '../../store'
+import { Loader } from '../../components/SharedStyled'
+import {
+  Avatar, BackIcon, Body, Container, Form, FormControls, FormIcons,
+  Header, HeaderBody, IconButton, Input, UserName,
+  UserType, Wrapper
+} from './styled'
+import {
+  getLastMessages, sendMessage,
+  subscribeToNewMessages, unsubscribeToNewMessages
+} from '../../services/firebase'
+import ChatList from './ChatList'
+
+function Chat ({ navigation }) {
+  const { state: { user } } = useContext(store)
+  const [chatKey, setChatKey] = useState('')
+  const [contact] = useState(navigation.getParam('contact'))
+  const [messages, setMessages] = useState([])
+  const [messagesLoaded, setMessagesLoaded] = useState(false)
+  const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
+  const [text, setText] = useState('')
+  const [statusBarHeight, setStatusBarHeight] = useState(0)
+
+  function handleDismissSnackBar () {
+    handleSnackbar({ visible: false, text: '' })
+  }
+
+  async function handleSend () {
+    if (!text.length) {
+      return
+    }
+
+    await sendMessage(user.uid, chatKey, text)
+    setText('')
+    // chatListRef.scrollToEnd(true)
+  }
+
+  function renderAvatar () {
+    return contact.image || require('../../assets/alumni-avatar-small.png')
+  }
+
+  // function setSnack (text = '') {
+  //   handleSnackbar({ visible: true, text })
+  // }
+
+  // onMount
+  useEffect(() => {
+    const uids = [user.uid, contact.uid].sort((a, b) => a > b ? 1 : -1)
+    const chatKey = uids.join('')
+
+    setChatKey(chatKey)
+
+    const loadMessages = async () => {
+      const newMessages = await getLastMessages(chatKey, 15)
+
+      setMessages(newMessages)
+      setMessagesLoaded(true)
+
+      // chatListRef.scrollToEnd(true)
+    }
+
+    const subscription = subscribeToNewMessages(chatKey, message => {
+      setMessages(messages => [...messages, message])
+      // chatListRef.scrollToEnd(true)
+    })
+
+    const { StatusBarManager } = NativeModules
+
+    StatusBarManager
+      .getHeight((statusBarFrameData) => setStatusBarHeight(statusBarFrameData.height))
+
+    loadMessages()
+
+    // onUnmount
+    return async () => unsubscribeToNewMessages(chatKey, await subscription)
+  }, []) // eslint-disable-line
+
+  return (
+    <Wrapper
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={statusBarHeight}
+    >
+      <Container>
+        <Header>
+          <IconButton onPress={() => navigation.goBack()}>
+            <BackIcon name='arrow-back' />
+          </IconButton>
+
+          <Avatar source={renderAvatar()} />
+
+          <HeaderBody>
+            <UserName>{contact.name}</UserName>
+            <UserType>{contact.accountType}</UserType>
+          </HeaderBody>
+        </Header>
+
+        {!messagesLoaded && <Loader />}
+
+        <Body>
+          <ChatList data={messages} userUid={user.uid} />
+        </Body>
+
+        <Snackbar
+          visible={snackbar.visible}
+          onDismiss={handleDismissSnackBar}
+        >
+          {snackbar.text}
+        </Snackbar>
+
+        <Form>
+          <Input
+            placeholder='Send a message...'
+            onChangeText={setText}
+            value={text}
+          />
+
+          <FormControls>
+            {
+              text.length === 0
+                ? (
+                  <>
+                    <IconButton>
+                      <FormIcons.Camera />
+                    </IconButton>
+
+                    <IconButton>
+                      <FormIcons.Mic />
+                    </IconButton>
+                  </>
+                ) : (
+                  <IconButton onPress={handleSend}>
+                    <FormIcons.Send />
+                  </IconButton>
+                )
+            }
+          </FormControls>
+        </Form>
+      </Container>
+    </Wrapper>
+  )
+}
+
+export default Chat
