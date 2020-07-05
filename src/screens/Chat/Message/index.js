@@ -3,16 +3,16 @@ import moment from 'moment'
 import { Bubble, BubbleArrow, Text, Time, Wrapper } from './styled'
 
 function Message ({ data, self }) {
-  const isSelfMessage = self || false
+  const isSelf = self || false
   const time = moment(data.createdAt).format('H:m')
 
   return (
     <Wrapper>
-      <Bubble self={isSelfMessage}>
-        <Text self={isSelfMessage}>{data.text}</Text>
+      <Bubble self={isSelf}>
+        <Text self={isSelf}>{data.text}</Text>
         <Time>{time}</Time>
       </Bubble>
-      <BubbleArrow />
+      <BubbleArrow self={isSelf} />
     </Wrapper>
   )
 }
