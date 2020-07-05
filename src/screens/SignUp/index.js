@@ -5,7 +5,7 @@ import { store } from '../../store'
 import { Container, Content, CustomButton, Input, Logo, RadioGroup, Title } from './styled'
 import { User as UserStorage } from '../../services/localstorage'
 import { isValidEmail, formatUserData } from '../../modules/utils'
-import { signup, updateProfile } from '../../services/firebase'
+import { registerProfile, signup } from '../../services/firebase'
 import { authenticate } from '../../store/actions'
 
 function SignUp ({ navigation }) {
@@ -53,11 +53,16 @@ function SignUp ({ navigation }) {
           }
         })
 
-      // Register the name
-      updateProfile({ displayName })
-
       if (user) {
         const profile = formatUserData({ ...user._user, displayName })
+
+        // Register profile on database
+        await registerProfile(profile.uid, {
+          accountType,
+          name: displayName
+        })
+
+        // Register on global state
         dispatch(authenticate(profile))
 
         // Register user on local storage
