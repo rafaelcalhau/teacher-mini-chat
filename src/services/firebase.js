@@ -3,26 +3,46 @@ import database from '@react-native-firebase/database'
 import { signout } from '../store/actions'
 
 export const addEntryToContactList = async (userUid, contactUid) => {
-  const data = await database()
-    .ref(`/users/${userUid}`)
-    .once('value')
-    .then(snapshot => snapshot.val())
+  try {
+    const contactRef = await database().ref(`/users/${contactUid}`)
+    const contactData = await contactRef.once('value').then(snapshot => snapshot.val())
 
-  const ref = await database().ref(`/users/${userUid}`)
+    const userRef = await database().ref(`/users/${userUid}`)
+    const userData = await userRef.once('value').then(snapshot => snapshot.val())
 
-  if (!data.contacts) {
-    // create list
-    return ref.set({ ...data, contacts: [contactUid] })
-      .catch(error => console.tron('[firebase]: addEntryToContactList error on create', error))
-  } else {
-    // update list
-    if (data.contacts.indexOf(contactUid) === -1) {
-      const newList = [...data.contacts, contactUid]
-      return ref.set({ ...data, contacts: newList })
-        .catch(error => console.tron('[firebase]: addEntryToContactList error on update', error))
-    }
+    userRef.transaction(async current => {
+      if (current) {
+        if (!contactData.contacts) {
+          // create list
+          await contactRef.set({ ...contactData, contacts: [userUid] })
+            .catch(error => console.tron('[firebase]: addEntryToContactList error on create', error.message))
+        } else {
+          // update list
+          if (contactData.contacts.indexOf(userUid) === -1) {
+            const newList = [...contactData.contacts, userUid]
+            await contactRef.set({ ...contactData, contacts: newList })
+              .catch(error => console.tron('[firebase]: addEntryToContactList error on update', error.message))
+          }
+        }
 
-    return null
+        if (!userData.contacts) {
+          // create list
+          await userRef.set({ ...userData, contacts: [contactUid] })
+            .catch(error => console.tron('[firebase]: addEntryToContactList error on create', error.message))
+        } else {
+          // update list
+          if (userData.contacts.indexOf(contactUid) === -1) {
+            const newList = [...userData.contacts, contactUid]
+            await userRef.set({ ...userData, contacts: newList })
+              .catch(error => console.tron('[firebase]: addEntryToContactList error on update', error.message))
+          }
+        }
+      }
+
+      return current
+    })
+  } catch (error) {
+    console.tron('[firebase]: addEntryToContactList main error', error.message)
   }
 }
 
@@ -122,13 +142,9 @@ export const logout = async (dispatch) => {
 }
 
 export const registerProfile = async (uid, data) => {
-  const userData = {}
-  const ref = await database().ref('/users')
-
-  userData[uid] = data
-
-  return ref
-    .set(userData)
+  return database()
+    .ref(`/users/${uid}`)
+    .set(data)
     .catch(error => console.tron('[firebase]: registerProfile error', error))
 }
 
