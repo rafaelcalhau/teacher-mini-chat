@@ -2,12 +2,12 @@ import auth from '@react-native-firebase/auth'
 import database from '@react-native-firebase/database'
 import { signout } from '../store/actions'
 
-export const logout = async (dispatch) => {
-  auth().signOut()
-
-  if (dispatch) {
-    dispatch(signout())
-  }
+export const getContacts = async (uid) => {
+  return database()
+    .ref(`/users/${uid}/contacts`)
+    .once('value')
+    .then(snapshot => snapshot.val())
+    .catch(error => console.tron('[firebase]: getContacts error', error))
 }
 
 export const getProfile = async (uid) => {
@@ -16,6 +16,14 @@ export const getProfile = async (uid) => {
     .once('value')
     .then(snapshot => snapshot.val())
     .catch(error => console.tron('[firebase]: getProfile error', error))
+}
+
+export const logout = async (dispatch) => {
+  auth().signOut()
+
+  if (dispatch) {
+    dispatch(signout())
+  }
 }
 
 export const registerProfile = async (uid, data) => {
