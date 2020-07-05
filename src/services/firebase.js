@@ -92,16 +92,20 @@ export const getProfile = async (uid) => {
     .catch(error => console.tron('[firebase]: getProfile error', error))
 }
 
-export const getLastMessages = async (chatKey) => {
+export const getLastMessages = async (chatKey, length = 15) => {
   return database()
     .ref(`/messages/${chatKey}`)
-    .limitToLast(10)
+    .orderByKey()
+    .limitToLast(length)
     .once('value')
     .then(snapshot => {
       const messages = snapshot.val()
+      console.tron('[firebase]: getLastMessages', messages)
 
       if (messages) {
-        return Object.keys(messages).map(key => ({ key, ...messages[key] }))
+        return Object.keys(messages)
+          .map(key => ({ key, ...messages[key] }))
+          .sort((a, b) => a > b ? 1 : -1)
       }
 
       return []
@@ -138,12 +142,10 @@ export const sendMessage = async (from, chatKey, text) => {
     createdAt: new Date().toISOString()
   }
 
-  await database()
+  return database()
     .ref(`/messages/${chatKey}`)
     .update(messages)
     .catch(error => console.tron('[firebase]: createContact error', error))
-
-  return null
 }
 
 export const signin = async (email, password) => {
@@ -152,4 +154,18 @@ export const signin = async (email, password) => {
 
 export const signup = async (email, password) => {
   return auth().createUserWithEmailAndPassword(email, password)
+}
+
+export const subscribeToNewMessages = async (chatKey, callback) => {
+  return database()
+    .ref(`/messages/${chatKey}`)
+    .orderByChild('createdAt')
+    .startAt(new Date().toISOString())
+    .on('child_added', snapshot => callback(snapshot.val()))
+}
+
+export const unsubscribeToNewMessages = async (chatKey, subscriscription) => {
+  return database()
+    .ref(`/messages/${chatKey}`)
+    .off('child_added', subscriscription)
 }
