@@ -58,13 +58,29 @@ export const getContacts = async (uid) => {
         .then(async (snapshot) => {
           // retrieve the last message if exists
           const uids = [uid, contactUid].sort((a, b) => a > b ? 1 : -1)
+          const chatKey = uids.join('')
+
           const lastMessage = await database()
-            .ref(`/messages/${uids.join('')}`)
+            .ref('/messages')
+            .orderByChild('key')
+            .equalTo(chatKey)
             .limitToLast(1)
             .once('value')
             .then(snapshot => snapshot.val())
 
-          return { ...snapshot.val(), uid: contactUid, lastMessage }
+          const newMessages = await database()
+            .ref(`/users/${uid}/unreaded_messages`)
+            .orderByChild('from')
+            .equalTo(contactUid)
+            .once('value')
+            .then(snapshot => snapshot.val())
+
+          return {
+            ...snapshot.val(),
+            uid: contactUid,
+            lastMessage: lastMessage || '',
+            newMessages: newMessages || 0
+          }
         })
     })))
     .catch(error => console.tron('[firebase]: getContacts error', error.message))

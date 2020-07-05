@@ -16,7 +16,7 @@ function Contact (props) {
         <LastMessage>Something here...</LastMessage>
       </Body>
       {
-        lastMessage && (
+        lastMessage.length > 0 && (
           <Details>
             <Time>lastMessage.time</Time>
             {(newMessages && newMessages > 0) && <Badge>{newMessages}</Badge>}
