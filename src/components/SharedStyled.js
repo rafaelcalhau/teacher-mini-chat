@@ -11,6 +11,14 @@ export const KeyboardAvoidingView = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios'
 })``
 
+export const Loader = styled.ActivityIndicator.attrs({
+  color: ({ theme }) => theme.colors.primary,
+  size: 'small'
+})`
+  align-self: center;
+  margin: 15px 0
+`
+
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1
 `
