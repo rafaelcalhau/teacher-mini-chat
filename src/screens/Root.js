@@ -17,11 +17,14 @@ function Root ({ navigation }) {
     if (authenticationVerified) {
       const loadProfile = async () => {
         const profile = await getProfile(user.uid)
+        console.tron(profile)
 
-        dispatch(updateUser({
-          accountType: profile.accountType,
-          name: profile.name
-        }))
+        if (profile) {
+          dispatch(updateUser({
+            accountType: profile.accountType,
+            name: profile.name
+          }))
+        }
 
         if (!user.uid) {
           navigation.navigate('SignIn')
