@@ -13,7 +13,7 @@ function Contact (props) {
       <Avatar source={image} />
       <Body>
         <Name>{name}</Name>
-        <LastMessage>Something here...</LastMessage>
+        {lastMessage.length > 0 && <LastMessage>{lastMessage}</LastMessage>}
       </Body>
       {
         lastMessage.length > 0 && (
