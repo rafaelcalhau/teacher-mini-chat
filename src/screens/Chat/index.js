@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Platform } from 'react-native'
 import { Snackbar } from 'react-native-paper'
 import { store } from '../../store'
 import { Loader } from '../../components/SharedStyled'
+import Message from './Message'
 import {
-  BackButton, BackIcon, Body, Container,
-  Header, HeaderBody, Messages, UserName, UserType
+  Avatar, BackIcon, Body, Container, Form, FormControls, FormIcons,
+  Header, HeaderBody, IconButton, Input, Messages, UserName,
+  UserType, Wrapper
 } from './styled'
-import { getLastMessages } from '../../services/firebase'
+import { getLastMessages, sendMessage } from '../../services/firebase'
 
 function Chat ({ navigation }) {
   const { state: { user } } = useContext(store)
@@ -21,6 +24,19 @@ function Chat ({ navigation }) {
     handleSnackbar({ visible: false, text: '' })
   }
 
+  async function handleSend () {
+    if (!text.length) {
+      return
+    }
+
+    await sendMessage(user.uid, chatKey, text)
+    setText('')
+  }
+
+  function renderAvatar () {
+    return contact.image || require('../../assets/alumni-avatar-small.png')
+  }
+
   function renderMessages () {
     if (!messagesLoaded) {
       return null
@@ -29,8 +45,8 @@ function Chat ({ navigation }) {
     return (
       <Messages
         data={(messages || [])}
-        keyExtractor={(item) => item.datetime}
-        renderItem={({ item }) => null}
+        keyExtractor={(item) => item.createdAt}
+        renderItem={({ item }) => <Message data={item} self={item.from === user.uid} />}
       />
     )
   }
@@ -41,11 +57,13 @@ function Chat ({ navigation }) {
 
   // onMount
   useEffect(() => {
-    const chatKey = `${user.uid}${contact.uid}`
+    const uids = [user.uid, contact.uid].sort((a, b) => a > b ? 1 : -1)
+    const chatKey = uids.join('')
+
     setChatKey(chatKey)
 
     const loadMessages = async () => {
-      const messages = (await getLastMessages(chatKey)) || []
+      const messages = await getLastMessages(chatKey)
 
       setMessages(messages)
       setMessagesLoaded(true)
@@ -55,16 +73,21 @@ function Chat ({ navigation }) {
   }, []) // eslint-disable-line
 
   return (
-    <>
+    <Wrapper
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={44}
+    >
       <Container>
         <Header>
-          <BackButton>
+          <IconButton onPress={() => navigation.goBack()}>
             <BackIcon name='arrow-back' />
-          </BackButton>
+          </IconButton>
+
+          <Avatar source={renderAvatar()} />
 
           <HeaderBody>
-            <UserName>{user.name}</UserName>
-            <UserType>{user.accountType}</UserType>
+            <UserName>{contact.name}</UserName>
+            <UserType>{contact.accountType}</UserType>
           </HeaderBody>
         </Header>
 
@@ -83,7 +106,30 @@ function Chat ({ navigation }) {
           </Snackbar>
         </Body>
       </Container>
-    </>
+      <Form>
+        <Input placeholder='Send a message...' onChangeText={setText} />
+        <FormControls>
+          {
+            text.length === 0
+              ? (
+                <>
+                  <IconButton>
+                    <FormIcons.Camera />
+                  </IconButton>
+
+                  <IconButton>
+                    <FormIcons.Mic />
+                  </IconButton>
+                </>
+              ) : (
+                <IconButton onPress={handleSend}>
+                  <FormIcons.Send />
+                </IconButton>
+              )
+          }
+        </FormControls>
+      </Form>
+    </Wrapper>
   )
 }
 

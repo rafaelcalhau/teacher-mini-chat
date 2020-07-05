@@ -92,6 +92,23 @@ export const getProfile = async (uid) => {
     .catch(error => console.tron('[firebase]: getProfile error', error))
 }
 
+export const getLastMessages = async (chatKey) => {
+  return database()
+    .ref(`/messages/${chatKey}`)
+    .limitToLast(10)
+    .once('value')
+    .then(snapshot => {
+      const messages = snapshot.val()
+
+      if (messages) {
+        return Object.keys(messages).map(key => ({ key, ...messages[key] }))
+      }
+
+      return []
+    })
+    .catch(error => console.tron('[firebase]: getContacts error', error.message))
+}
+
 export const logout = async (dispatch) => {
   auth().signOut()
 
@@ -109,6 +126,24 @@ export const registerProfile = async (uid, data) => {
   return ref
     .set(userData)
     .catch(error => console.tron('[firebase]: registerProfile error', error))
+}
+
+export const sendMessage = async (from, chatKey, text) => {
+  const { key } = await database().ref(`/messages/${chatKey}`).push()
+  const messages = {}
+
+  messages[key] = {
+    from,
+    text,
+    createdAt: new Date().toISOString()
+  }
+
+  await database()
+    .ref(`/messages/${chatKey}`)
+    .update(messages)
+    .catch(error => console.tron('[firebase]: createContact error', error))
+
+  return null
 }
 
 export const signin = async (email, password) => {
