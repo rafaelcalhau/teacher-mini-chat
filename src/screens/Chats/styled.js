@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { FlatList } from 'react-native'
 import AntIcons from 'react-native-vector-icons/AntDesign'
 import { FAB } from 'react-native-paper'
 import { Button, InputText } from '../../components'
@@ -45,6 +46,10 @@ export const ContactFormTitle = styled(Text)`
   font-size: 22px;
   font-weight: 600;
   margin: 20px 0 30px
+`
+
+export const ContactsList = styled(FlatList)`
+  margin: 25px 0
 `
 
 export const Container = styled.View`

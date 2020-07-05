@@ -5,11 +5,12 @@ import { SearchBox } from '../../components'
 import { Loader } from '../../components/SharedStyled'
 import { isValidEmail } from '../../modules/utils'
 import { store } from '../../store'
+import Contact from './Contact'
 import {
   AvatarAlumini, Body, ButtonLogout, ButtonSubmitNewContact, ContactForm,
-  ContactFormTitle, Container, ButtonAddContact, Header, HeaderBody,
-  HeaderIcon, Input, Title, UserName, UserType, ZeroContactsText,
-  ZeroContactsView
+  ContactFormTitle, ContactsList, Container, ButtonAddContact, Header,
+  HeaderBody, HeaderIcon, Input, Title, UserName, UserType,
+  ZeroContactsText, ZeroContactsView
 } from './styled'
 import {
   addEntryToContactList, createContact,
@@ -19,16 +20,20 @@ import { User as UserStorage } from '../../services/localstorage'
 
 function Chats ({ navigation }) {
   const { dispatch, state: { user } } = useContext(store)
-  const [alumniName, setAlumniName] = useState('Isa Calhau Monte')
-  const [alumniEmail, setAlumniEmail] = useState('isaiannyam@gmail.com')
-  const [alumniPassword, setAlumniPassword] = useState('123123')
-  const [alumniPasswordConfirmation, setAlumniPasswordConfirmation] = useState('123123')
-  const [contacts, setContacts] = useState('')
+  const [alumniName, setAlumniName] = useState('')
+  const [alumniEmail, setAlumniEmail] = useState('')
+  const [alumniPassword, setAlumniPassword] = useState('')
+  const [alumniPasswordConfirmation, setAlumniPasswordConfirmation] = useState('')
+  const [contacts, setContacts] = useState([])
   const [contactsLoaded, setContactsLoaded] = useState(false)
   const [isAddingContact, setIsAddingContact] = useState(false)
   const [modalIsActive, setModalIsActive] = useState(false)
   const [searchKeywords, setSearchKeywords] = useState('')
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
+
+  function handleContactPressed () {
+    //
+  }
 
   function handleDismissSnackBar () {
     handleSnackbar({ visible: false, text: '' })
@@ -88,7 +93,15 @@ function Chats ({ navigation }) {
       )
     }
 
-    return null
+    return (
+      <ContactsList
+        data={(contacts || [])}
+        keyExtractor={(item) => item.uid}
+        renderItem={({ item }) => (
+          <Contact key={item.uid} data={item} onPress={handleContactPressed} />
+        )}
+      />
+    )
   }
 
   function resetNewContactForm () {
@@ -113,6 +126,8 @@ function Chats ({ navigation }) {
 
     loadContacts()
   }, []) // eslint-disable-line
+
+  console.tron(contacts)
 
   return (
     <>
