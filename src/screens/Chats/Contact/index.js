@@ -5,11 +5,13 @@ import {
 } from './styled'
 
 function Contact (props) {
+  const { onPress } = props
   const { lastMessage, name, newMessages } = props.data
+  const handlePress = onPress || (() => null)
   const image = props.image || require('../../../assets/alumni-avatar-small.png')
 
   return (
-    <Container>
+    <Container onPress={handlePress}>
       <Avatar source={image} />
       <Body>
         <Name>{name}</Name>

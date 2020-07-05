@@ -31,8 +31,8 @@ function Chats ({ navigation }) {
   const [searchKeywords, setSearchKeywords] = useState('')
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
 
-  function handleContactPressed () {
-    //
+  function handleContactPressed (contact) {
+    navigation.navigate('Chat', { contact })
   }
 
   function handleDismissSnackBar () {
@@ -98,7 +98,7 @@ function Chats ({ navigation }) {
         data={(contacts || [])}
         keyExtractor={(item) => item.uid}
         renderItem={({ item }) => (
-          <Contact key={item.uid} data={item} onPress={handleContactPressed} />
+          <Contact key={item.uid} data={item} onPress={() => handleContactPressed(item)} />
         )}
       />
     )
@@ -126,8 +126,6 @@ function Chats ({ navigation }) {
 
     loadContacts()
   }, []) // eslint-disable-line
-
-  console.tron(contacts)
 
   return (
     <>

@@ -61,9 +61,7 @@ export const getContacts = async (uid) => {
           const chatKey = uids.join('')
 
           const lastMessage = await database()
-            .ref('/messages')
-            .orderByChild('key')
-            .equalTo(chatKey)
+            .ref(`/messages/${chatKey}`)
             .limitToLast(1)
             .once('value')
             .then(snapshot => snapshot.val())

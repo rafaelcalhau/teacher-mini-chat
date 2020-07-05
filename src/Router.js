@@ -2,13 +2,17 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
 // Screens
-import { Chats, SignIn, SignUp, Root } from './screens'
+import { Chat, Chats, SignIn, SignUp, Root } from './screens'
 
 const navigationOptions = () => ({
   headerShown: false
 })
 
 const MainNavigator = createStackNavigator({
+  Chat: {
+    screen: Chat,
+    navigationOptions
+  },
   Chats: {
     screen: Chats,
     navigationOptions

@@ -1,7 +1,9 @@
 import React, { useEffect, useContext } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import useLocalProfile from '../modules/hooks/useLocalProfile'
+import { getProfile } from '../services/firebase'
 import { store } from '../store'
+import { updateUser } from '../store/actions'
 
 function Root ({ navigation }) {
   const { dispatch, state } = useContext(store)
@@ -13,11 +15,22 @@ function Root ({ navigation }) {
   // Redirect after verifiy local user profile
   useEffect(() => {
     if (authenticationVerified) {
-      if (!user.uid) {
-        navigation.navigate('SignIn')
-      } else {
-        navigation.navigate('Chats')
+      const loadProfile = async () => {
+        const profile = await getProfile(user.uid)
+
+        dispatch(updateUser({
+          accountType: profile.accountType,
+          name: profile.name
+        }))
+
+        if (!user.uid) {
+          navigation.navigate('SignIn')
+        } else {
+          navigation.navigate('Chats')
+        }
       }
+
+      loadProfile()
     }
   }, [authenticationVerified]) // eslint-disable-line
 
