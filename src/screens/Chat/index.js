@@ -9,13 +9,16 @@ import {
   Header, HeaderBody, IconButton, Input, Messages, UserName,
   UserType, Wrapper
 } from './styled'
-import { getLastMessages, sendMessage } from '../../services/firebase'
+import {
+  getLastMessages, sendMessage,
+  subscribeToNewMessages, unsubscribeToNewMessages
+} from '../../services/firebase'
 
 function Chat ({ navigation }) {
   const { state: { user } } = useContext(store)
   const [chatKey, setChatKey] = useState('')
   const [contact] = useState(navigation.getParam('contact'))
-  const [messages, setMessages] = useState('')
+  const [messages, setMessages] = useState([])
   const [messagesLoaded, setMessagesLoaded] = useState(false)
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
   const [text, setText] = useState('')
@@ -45,7 +48,7 @@ function Chat ({ navigation }) {
     return (
       <Messages
         data={(messages || [])}
-        keyExtractor={(item) => item.createdAt}
+        keyExtractor={(item) => String(item.createdAt)}
         renderItem={({ item }) => <Message data={item} self={item.from === user.uid} />}
       />
     )
@@ -63,13 +66,21 @@ function Chat ({ navigation }) {
     setChatKey(chatKey)
 
     const loadMessages = async () => {
-      const messages = await getLastMessages(chatKey)
+      const newMessages = await getLastMessages(chatKey, 15)
 
-      setMessages(messages)
+      setMessages(newMessages)
       setMessagesLoaded(true)
     }
 
+    const subscription = subscribeToNewMessages(chatKey, message => {
+      console.tron('subscription.message', message)
+      setMessages(messages => [...messages, message])
+    })
+
     loadMessages()
+
+    // onUnmount
+    return async () => unsubscribeToNewMessages(chatKey, await subscription)
   }, []) // eslint-disable-line
 
   return (
@@ -97,17 +108,17 @@ function Chat ({ navigation }) {
               ? <Loader />
               : renderMessages()
           }
-
-          <Snackbar
-            visible={snackbar.visible}
-            onDismiss={handleDismissSnackBar}
-          >
-            {snackbar.text}
-          </Snackbar>
         </Body>
+
+        <Snackbar
+          visible={snackbar.visible}
+          onDismiss={handleDismissSnackBar}
+        >
+          {snackbar.text}
+        </Snackbar>
       </Container>
       <Form>
-        <Input placeholder='Send a message...' onChangeText={setText} />
+        <Input placeholder='Send a message...' onChangeText={setText} value={text} />
         <FormControls>
           {
             text.length === 0

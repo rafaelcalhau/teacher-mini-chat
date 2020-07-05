@@ -33,7 +33,7 @@ export const BubbleArrow = styled.View`
       border-top-width: 0;
       border-right-width: 15px;
       border-bottom-width: 10px;
-      border-left-width: 10px;
+      border-left-width: 15px;
       border-top-left-radius: 5px;
     `
   }
@@ -41,7 +41,7 @@ export const BubbleArrow = styled.View`
   height: 0px;
   position: absolute;
   bottom: 20px;
-  left: ${({ self, theme }) => self ? 'auto' : '0'};
+  left: ${({ self, theme }) => self ? 'auto' : '-15px'};
   right: ${({ self, theme }) => self ? '0' : 'auto'};
   z-index: -1
 `
