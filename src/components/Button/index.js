@@ -11,7 +11,7 @@ function CustomButton (props) {
 
   return (
     <Button {...props}>
-      <Label outline={outline}>
+      <Label loading={loading} outline={outline}>
         {!loading ? label : <ActivityIndicator color={indicatorColor} />}
       </Label>
     </Button>

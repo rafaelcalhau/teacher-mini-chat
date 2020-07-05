@@ -14,4 +14,5 @@ export const Button = styled.TouchableOpacity`
 export const Label = styled(Text)`
   color: ${({ outline, theme }) => outline ? theme.colors.primary : 'white'};
   font-weight: bold
+  margin-top: ${({ loading }) => loading ? '4px' : '0px'};
 `
