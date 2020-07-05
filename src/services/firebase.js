@@ -51,13 +51,23 @@ export const getContacts = async (uid) => {
     .ref(`/users/${uid}/contacts`)
     .once('value')
     .then(snapshot => snapshot.val())
-    .then(async contacts => Promise.all(contacts.map(contact => {
+    .then(async contacts => Promise.all(contacts.map(contactUid => {
       return database()
-        .ref(`/users/${contact}`)
+        .ref(`/users/${contactUid}`)
         .once('value')
-        .then(snapshot => ({ ...snapshot.val(), uid: contact }))
+        .then(async (snapshot) => {
+          // retrieve the last message if exists
+          const uids = [uid, contactUid].sort((a, b) => a > b ? 1 : -1)
+          const lastMessage = await database()
+            .ref(`/messages/${uids.join('')}`)
+            .limitToLast(1)
+            .once('value')
+            .then(snapshot => snapshot.val())
+
+          return { ...snapshot.val(), uid: contactUid, lastMessage }
+        })
     })))
-    .catch(error => console.tron('[firebase]: getContacts error', error))
+    .catch(error => console.tron('[firebase]: getContacts error', error.message))
 }
 
 export const getProfile = async (uid) => {
