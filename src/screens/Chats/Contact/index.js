@@ -5,7 +5,7 @@ import {
 } from './styled'
 
 function Contact (props) {
-  const { name } = props.data
+  const { lastMessage, name, newMessages } = props.data
   const image = props.image || require('../../../assets/alumni-avatar-small.png')
 
   return (
@@ -15,10 +15,14 @@ function Contact (props) {
         <Name>{name}</Name>
         <LastMessage>Something here...</LastMessage>
       </Body>
-      <Details>
-        <Time>09:25</Time>
-        <Badge>2</Badge>
-      </Details>
+      {
+        lastMessage && (
+          <Details>
+            <Time>lastMessage.time</Time>
+            {(newMessages && newMessages > 0) && <Badge>{newMessages}</Badge>}
+          </Details>
+        )
+      }
     </Container>
   )
 }
