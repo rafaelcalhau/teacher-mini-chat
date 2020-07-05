@@ -51,6 +51,12 @@ export const getContacts = async (uid) => {
     .ref(`/users/${uid}/contacts`)
     .once('value')
     .then(snapshot => snapshot.val())
+    .then(async contacts => Promise.all(contacts.map(contact => {
+      return database()
+        .ref(`/users/${contact}`)
+        .once('value')
+        .then(snapshot => ({ ...snapshot.val(), uid: contact }))
+    })))
     .catch(error => console.tron('[firebase]: getContacts error', error))
 }
 
