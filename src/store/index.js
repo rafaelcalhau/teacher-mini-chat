@@ -28,6 +28,14 @@ const StateProvider = ({ children }) => {
           ...state,
           user: {}
         }
+      case ActionTypes.UPDATE_USER:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            ...action.payload
+          }
+        }
       default:
         throw new Error()
     };
