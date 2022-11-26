@@ -1,13 +1,11 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
 import { FlatList } from 'react-native'
 import AntIcons from 'react-native-vector-icons/AntDesign'
 import { FAB } from 'react-native-paper'
 import { Button, InputText } from '../../components'
 import { Text } from '../../components/SharedStyled'
 
-export const AvatarAlumini = styled.Image.attrs({
-  source: require('../../assets/avatar-alumni-large.png')
-})`
+export const AvatarAlumini = styled.Image`
   align-self: center;
   margin-bottom: 25px
 `
@@ -16,9 +14,7 @@ export const Body = styled.View`
   flex: 1
 `
 
-export const ButtonAddContact = styled(FAB).attrs({
-  color: 'white'
-})`
+export const ButtonAddContact = styled(FAB)`
   background-color: ${({ theme }) => theme.colors.primary};
   position: absolute;
   right: 20px
@@ -71,10 +67,7 @@ export const HeaderBody = styled.View`
   padding: 0 20px
 `
 
-export const Input = styled(InputText).attrs({
-  autoCapitalize: 'none',
-  autoCorrect: false
-})`
+export const Input = styled(InputText)`
   margin: ${({ last }) => !last ? '15px 0 0 0' : '15px 0'}
 `
 
@@ -84,9 +77,7 @@ export const Title = styled(Text)`
   font-weight: bold;
 `
 
-export const HeaderIcon = styled(AntIcons).attrs({
-  size: 34
-})`
+export const HeaderIcon = styled(AntIcons)`
   color: ${({ theme }) => theme.colors.primary}
 `
 

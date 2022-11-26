@@ -14,7 +14,7 @@ const useAuthenticationState = (dispatch) => {
         const profile = await UserStorage.get()
         const data = { ...profile, ...formattedUser }
 
-        console.tron('[useAuthenticationState]')
+        console.log('@tron', '[useAuthenticationState]')
         await UserStorage.put(data)
         dispatch(authenticate(data))
       } else {

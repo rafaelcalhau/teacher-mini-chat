@@ -7,10 +7,24 @@ import { isValidEmail } from '../../modules/utils'
 import { store } from '../../store'
 import Contact from './Contact'
 import {
-  AvatarAlumini, Body, ButtonLogout, ButtonSubmitNewContact, ContactForm,
-  ContactFormTitle, ContactsList, Container, ButtonAddContact, Header,
-  HeaderBody, HeaderIcon, Input, Title, UserName, UserType,
-  ZeroContactsText, ZeroContactsView
+  AvatarAlumini,
+  Body,
+  ButtonLogout,
+  ButtonSubmitNewContact,
+  ContactForm,
+  ContactFormTitle,
+  ContactsList,
+  Container,
+  ButtonAddContact,
+  Header,
+  HeaderBody,
+  HeaderIcon,
+  Input,
+  Title,
+  UserName,
+  UserType,
+  ZeroContactsText,
+  ZeroContactsView
 } from './styled'
 import {
   addEntryToContactList, createContact,
@@ -87,7 +101,7 @@ function Chats ({ navigation }) {
     if (!contacts.length) {
       return (
         <ZeroContactsView>
-          <AvatarAlumini />
+          <AvatarAlumini source={require('../../assets/avatar-alumni-large.png')} />
           <ZeroContactsText>Your contact list is empty</ZeroContactsText>
         </ZeroContactsView>
       )
@@ -131,7 +145,7 @@ function Chats ({ navigation }) {
     <>
       <Container>
         <Header>
-          <HeaderIcon name='user' />
+          <HeaderIcon name='user' size={34} />
 
           <HeaderBody>
             <UserName>{user.name}</UserName>
@@ -139,7 +153,7 @@ function Chats ({ navigation }) {
           </HeaderBody>
 
           <ButtonLogout onPress={handleLogout}>
-            <HeaderIcon name='logout' />
+            <HeaderIcon name='logout' size={34} />
           </ButtonLogout>
         </Header>
 
@@ -155,11 +169,12 @@ function Chats ({ navigation }) {
 
           {
             !contactsLoaded
-              ? <Loader />
+              ? <Loader size='small' />
               : renderContacts()
           }
 
           <ButtonAddContact
+            color='white'
             icon='plus'
             onPress={handleNewContact}
           />
@@ -175,29 +190,33 @@ function Chats ({ navigation }) {
 
       <Modal visible={modalIsActive} onDismiss={hideModal}>
         <ContactForm onTouchStart={() => Keyboard.dismiss()}>
-          <ContactFormTitle>Add new alumni</ContactFormTitle>
+          <ContactFormTitle>Add new student</ContactFormTitle>
 
           <Input
             label='Name'
             onChangeText={setAlumniName}
             value={alumniName}
+            autoCapitalize='none'
           />
           <Input
             label='Email'
             onChangeText={setAlumniEmail}
             value={alumniEmail}
+            autoCapitalize='none'
           />
           <Input
             secureTextEntry
             label='Password'
             onChangeText={setAlumniPassword}
             value={alumniPassword}
+            autoCapitalize='none'
           />
           <Input
             secureTextEntry
             label='Confirm Password'
             onChangeText={setAlumniPasswordConfirmation}
             value={alumniPasswordConfirmation}
+            autoCapitalize='none'
           />
 
           <ButtonSubmitNewContact

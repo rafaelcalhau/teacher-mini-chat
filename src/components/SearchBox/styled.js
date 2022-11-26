@@ -1,4 +1,4 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 
 export const Container = styled.View`
@@ -8,9 +8,7 @@ export const Container = styled.View`
   width: ${({ width }) => width || '100%'}
 `
 
-export const Icon = styled(IonIcon).attrs({
-  size: 24
-})`
+export const Icon = styled(IonIcon)`
   color: ${({ theme }) => theme.colors.silver};
   position: absolute;
   z-index: 9;

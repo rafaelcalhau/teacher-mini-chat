@@ -4,7 +4,7 @@ import { Snackbar } from 'react-native-paper'
 import { store } from '../../store'
 import { Loader } from '../../components/SharedStyled'
 import {
-  Avatar, BackIcon, Body, Container, Form, FormControls, FormIcons,
+  Avatar, BackIcon, Body, Container, Form, FormControls, FormIcon,
   Header, HeaderBody, IconButton, Input, UserName,
   UserType, Wrapper
 } from './styled'
@@ -86,10 +86,10 @@ function Chat ({ navigation }) {
       <Container>
         <Header>
           <IconButton onPress={() => navigation.goBack()}>
-            <BackIcon name='arrow-back' />
+            <BackIcon name='arrow-back' size={34} />
           </IconButton>
 
-          <Avatar source={renderAvatar()} />
+          <Avatar size={36} source={renderAvatar()} />
 
           <HeaderBody>
             <UserName>{contact.name}</UserName>
@@ -97,7 +97,7 @@ function Chat ({ navigation }) {
           </HeaderBody>
         </Header>
 
-        {!messagesLoaded && <Loader />}
+        {!messagesLoaded && <Loader size='small' />}
 
         <Body>
           <ChatList data={messages} userUid={user.uid} />
@@ -115,6 +115,8 @@ function Chat ({ navigation }) {
             placeholder='Send a message...'
             onChangeText={setText}
             value={text}
+            autoCapitalize='none'
+            placeholderTextColor='rgba(255, 255, 255, .5)'
           />
 
           <FormControls>
@@ -123,16 +125,16 @@ function Chat ({ navigation }) {
                 ? (
                   <>
                     <IconButton>
-                      <FormIcons.Camera />
+                      <FormIcon name='camera' size={22} />
                     </IconButton>
 
                     <IconButton>
-                      <FormIcons.Mic />
+                      <FormIcon name='microphone' size={22} />
                     </IconButton>
                   </>
                 ) : (
                   <IconButton onPress={handleSend}>
-                    <FormIcons.Send />
+                    <FormIcon name='send' size={22} />
                   </IconButton>
                 )
             }

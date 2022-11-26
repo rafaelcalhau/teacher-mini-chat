@@ -16,7 +16,7 @@ function SearchBox (props) {
 
   return (
     <Container style={containerStyles}>
-      <Icon name='search' />
+      <Icon name='search' size={24} />
       <Input {...inputProps} {...inputStyles} />
     </Container>
   )

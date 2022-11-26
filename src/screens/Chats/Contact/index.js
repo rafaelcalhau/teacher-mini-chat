@@ -8,7 +8,7 @@ function Contact (props) {
   const { onPress } = props
   const { accountType, lastMessage, name, newMessages } = props.data
   const handlePress = onPress || (() => null)
-  const iconName = accountType === 'alumni' ? 'user-graduate' : 'user-tie'
+  const iconName = accountType === 'student' ? 'user-graduate' : 'user-tie'
   const image = props.image || require('../../../assets/alumni-avatar-small.png')
 
   return (

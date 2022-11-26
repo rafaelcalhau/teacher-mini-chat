@@ -1,5 +1,5 @@
-import styled from 'styled-components/native'
-import KeyboardAwareScrollView from '@pietile-native-kit/keyboard-aware-scrollview'
+import styled from '@emotion/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Text } from '../../components/SharedStyled'
 import { Button, InputText } from '../../components'
 
@@ -14,28 +14,17 @@ export const Container = styled.View`
   padding: 20px
 `
 
-export const Content = styled(KeyboardAwareScrollView).attrs({
-  contentContainerStyle: {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    flex: 1
-  }
-})`
+export const Content = styled(KeyboardAwareScrollView)`
   width: 100%
 `
 
-export const Input = styled(InputText).attrs({
-  autoCapitalize: 'none',
-  autoCorrect: false
-})`
+export const Input = styled(InputText)`
   margin: 10px 0
 `
 
-export const Logo = styled.Image.attrs({
-  source: require('../../assets/logo.png')
-})`
-  margin: 100px 0 48px;
-  height: 28px;
+export const Logo = styled.Image`
+  margin: 40px 0 48px;
+  height: 60px;
   width: 183px;
 `
 

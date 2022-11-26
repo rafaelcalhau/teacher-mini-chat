@@ -2,19 +2,29 @@ import React, { useContext, useState } from 'react'
 import { Keyboard } from 'react-native'
 import { Snackbar } from 'react-native-paper'
 import { store } from '../../store'
-import { Container, Content, CustomButton, Input, Logo, RadioGroup, Title } from './styled'
+import {
+  Content,
+  CustomButton,
+  Form,
+  Input,
+  Logo,
+  RadioGroup,
+  Row,
+  Title
+} from './styled'
 import { User as UserStorage } from '../../services/localstorage'
 import { isValidEmail, formatUserData } from '../../modules/utils'
 import { registerProfile, signup } from '../../services/firebase'
 import { authenticate } from '../../store/actions'
+import { ScreenContainerView } from '../../components/SharedStyled'
 
 function SignUp ({ navigation }) {
   const { dispatch } = useContext(store)
   const [accountType, handleAccountType] = useState(null)
-  const [name, handleName] = useState('Rafael Santos')
-  const [email, handleEmail] = useState('rafaelcalhau@yahoo.com')
-  const [password, handlePassword] = useState('123123')
-  const [passwordConfirmation, handlePasswordConfirmation] = useState('123123')
+  const [name, handleName] = useState('')
+  const [email, handleEmail] = useState('')
+  const [password, handlePassword] = useState('')
+  const [passwordConfirmation, handlePasswordConfirmation] = useState('')
   const [isAuthenticating, setIsAuthenticating] = useState(false)
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
 
@@ -28,7 +38,7 @@ function SignUp ({ navigation }) {
 
   async function handleRegister () {
     if (!accountType) {
-      setSnack('Please select between Teacher and Alumni')
+      setSnack('Please select between Teacher and Student')
     } else if (!name.length) {
       setSnack('Please enter your Name')
     } else if (!isValidEmail(email)) {
@@ -80,52 +90,73 @@ function SignUp ({ navigation }) {
   }
 
   return (
-    <Container onTouchStart={() => Keyboard.dismiss()}>
-      <Content>
-        <Logo />
+    <ScreenContainerView onTouchStart={() => Keyboard.dismiss()}>
+      <Content
+        contentContainerStyle={{
+          alignItems: 'center',
+          alignSelf: 'stretch',
+          justifyContent: 'center',
+          padding: 5,
+          flex: 1
+        }}
+      >
+        <Logo source={require('../../assets/logo.png')} />
         <Title>SIGN UP</Title>
 
-        <RadioGroup
-          horizontal
-          radio
-          label='You are...'
-          onChange={handleAccountType}
-          options={[
-            { label: 'Teacher', value: 'teacher' },
-            { label: 'Alumni', value: 'alumni' }
-          ]}
-          optionWidth='42%'
-          value={accountType}
-          width='80%'
-        />
+        <Form>
+          <RadioGroup
+            horizontal
+            radio
+            label='You are...'
+            onChange={handleAccountType}
+            options={[
+              { label: 'Teacher', value: 'teacher' },
+              { label: 'Student', value: 'student' }
+            ]}
+            optionWidth='40%'
+            value={accountType}
+            width='80%'
+          />
 
-        <Input
-          label='Your name'
-          onChangeText={handleName}
-          value={name}
-          width='80%'
-        />
-        <Input
-          label='Your email address'
-          onChangeText={handleEmail}
-          value={email}
-          width='80%'
-        />
-        <Input
-          secureTextEntry
-          label='Your password'
-          onChangeText={handlePassword}
-          value={password}
-          width='80%'
-        />
-        <Input
-          last
-          secureTextEntry
-          label='Confirme your password'
-          onChangeText={handlePasswordConfirmation}
-          value={passwordConfirmation}
-          width='80%'
-        />
+          <Row>
+            <Input
+              autoCapitalize='none'
+              label='Your name'
+              onChangeText={handleName}
+              value={name}
+              width='80%'
+            />
+          </Row>
+          
+          <Row>
+            <Input
+              autoCapitalize='none'
+              label='Your email address'
+              onChangeText={handleEmail}
+              value={email}
+              width='80%'
+            />
+          </Row>
+
+          <Row>
+            <Input
+              secureTextEntry
+              autoCapitalize='none'
+              label='Your password'
+              onChangeText={handlePassword}
+              value={password}
+              width='80%'
+            />
+            <Input
+              autoCapitalize='none'
+              secureTextEntry
+              label='Confirm password'
+              onChangeText={handlePasswordConfirmation}
+              value={passwordConfirmation}
+              width='80%'
+            />
+          </Row>
+        </Form>
 
         <CustomButton loading={isAuthenticating} label='REGISTER' width='80%' onPress={handleRegister} />
         <CustomButton outline label='BACK' width='80%' onPress={handleBack} />
@@ -137,7 +168,7 @@ function SignUp ({ navigation }) {
       >
         {snackbar.text}
       </Snackbar>
-    </Container>
+    </ScreenContainerView>
   )
 }
 

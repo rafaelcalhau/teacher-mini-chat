@@ -14,7 +14,7 @@ const useLocalProfile = (dispatch) => {
       dispatch(authenticationIsVerified())
     }
 
-    verifyProfile()
+    verifyProfile().catch(err => console.log({ err }))
   }, []) // eslint-disable-line
 }
 

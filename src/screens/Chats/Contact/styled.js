@@ -1,11 +1,9 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5'
 import { Avatar as PaperAvatar, Badge as PaperBadge } from 'react-native-paper'
 import { Text } from '../../../components/SharedStyled'
 
-export const Avatar = styled(PaperAvatar.Image).attrs({
-  size: 36
-})`
+export const Avatar = styled(PaperAvatar.Image)`
   background-color: transparent
 `
 

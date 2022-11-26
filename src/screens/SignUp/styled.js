@@ -1,5 +1,5 @@
-import styled from 'styled-components/native'
-import KeyboardAwareScrollView from '@pietile-native-kit/keyboard-aware-scrollview'
+import styled from '@emotion/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Text } from '../../components/SharedStyled'
 import { Button, InputCheckbox, InputText } from '../../components'
 
@@ -7,44 +7,40 @@ export const CustomButton = styled(Button)`
   margin: 5px 0;
 `
 
-export const Container = styled.View`
-  align-items: center;
-  align-self: stretch;
-  background-color: white;
-  flex: 1;
-  padding: 20px;
+export const Content = styled(KeyboardAwareScrollView)`
   width: 100%
 `
 
-export const Content = styled(KeyboardAwareScrollView).attrs({
-  contentContainerStyle: {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    flex: 1
-  }
-})`
-  width: 100%
+export const Form = styled.View`
+  flex: 0.9;
+  margin: 10px -10px;
 `
 
 export const RadioGroup = styled(InputCheckbox)``
 
-export const Input = styled(InputText).attrs({
-  autoCapitalize: 'none',
-  autoCorrect: false
-})`
-  margin: ${({ last }) => !last ? '15px 0 0 0' : '15px 0'}
+export const Input = styled(InputText)`
+  flex: 1;
+  margin: 0;
+  padding: 5px;
 `
 
-export const Logo = styled.Image.attrs({
-  source: require('../../assets/logo.png')
-})`
-  margin: 50px 0 48px;
-  height: 28px;
+export const Logo = styled.Image`
+  margin: 0 48px 20px;
+  height: 60px;
   width: 183px;
+`
+
+export const Row = styled.View`
+  align-self: stretch;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0px;
 `
 
 export const Title = styled(Text)`
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 70px
+  margin-bottom: 30px
 `

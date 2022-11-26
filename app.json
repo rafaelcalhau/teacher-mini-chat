@@ -1,4 +1,36 @@
 {
   "name": "teacherminichat",
-  "displayName": "TeacherMiniChat"
+  "slug": "teacherminichat",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "icon": "./src/assets/logo.png",
+  "userInterfaceStyle": "light",
+  "hooks": {
+    "postPublish": []
+  },
+  "splash": {
+    "image": "./src/assets/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#F0F0FF"
+  },
+  "updates": {
+    "fallbackToCacheTimeout": 0
+  },
+  "assetBundlePatterns": [
+    "**/*"
+  ],
+  "ios": {
+    "bundleIdentifier": "me.calhau.teacherminichat",
+    "supportsTablet": true
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./src/assets/logo.png",
+      "backgroundColor": "#FFFFFF"
+    },
+    "package": "me.calhau.teacherminichat"
+  },
+  "web": {
+    "favicon": "./src/assets/logo.png"
+  }
 }

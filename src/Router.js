@@ -1,38 +1,40 @@
-import { createAppContainer } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
+import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as SplashScreen from 'expo-splash-screen';
 
 // Screens
-import { Chat, Chats, SignIn, SignUp, Root } from './screens'
+import SignIn from './screens/SignIn';
+import SignUp from './screens/SignUp';
+import Root from './screens/Root';
 
-const navigationOptions = () => ({
+const screenDefaultOptions = {
+  gestureEnabled: false,
   headerShown: false
-})
+};
 
-const MainNavigator = createStackNavigator({
-  Chat: {
-    screen: Chat,
-    navigationOptions
-  },
-  Chats: {
-    screen: Chats,
-    navigationOptions
-  },
-  SignIn: {
-    screen: SignIn,
-    navigationOptions
-  },
-  SignUp: {
-    screen: SignUp,
-    navigationOptions
-  },
-  Root: {
-    screen: Root,
-    navigationOptions
-  }
-}, {
-  initialRouteName: 'Root'
-})
+const Stack = createNativeStackNavigator();
 
-const Router = createAppContainer(MainNavigator)
+const Router = () => {
+  const navigation = useNavigation();
+
+  // didMount
+  useEffect(() => {
+    console.log('@hey')
+    SplashScreen.hideAsync()
+    navigation.navigate('Root');
+  }, [])
+
+  return (
+    <Stack.Navigator>
+      {/* <Stack.Screen name='Chat' component={Chat} />
+      <Stack.Screen name='Chats' component={Chats} />
+      */}
+      <Stack.Screen name='SignIn' component={SignIn} options={screenDefaultOptions} />
+      <Stack.Screen name='SignUp' component={SignUp} options={screenDefaultOptions} />
+      <Stack.Screen name='Root' component={Root} options={screenDefaultOptions} />
+    </Stack.Navigator>
+  )
+}
 
 export default Router

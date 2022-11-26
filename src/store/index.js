@@ -1,5 +1,4 @@
 import React, { createContext, useReducer } from 'react'
-// import auth from '@react-native-firebase/auth'
 import ActionTypes from './types'
 
 const initialState = {
@@ -40,8 +39,6 @@ const StateProvider = ({ children }) => {
         throw new Error()
     };
   }, initialState)
-
-  // auth().signOut()
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>
 }

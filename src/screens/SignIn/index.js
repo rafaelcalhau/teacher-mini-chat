@@ -6,7 +6,14 @@ import { User as UserStorage } from '../../services/localstorage'
 import { store } from '../../store'
 import { authenticate } from '../../store/actions'
 import { isValidEmail, formatUserData } from '../../modules/utils'
-import { Container, Content, CustomButton, Input, Logo, Title } from './styled'
+import {
+  Content,
+  CustomButton,
+  Input,
+  Logo,
+  Title
+} from './styled'
+import { ScreenContainerView } from '../../components/SharedStyled'
 
 function SignIn ({ navigation }) {
   const { state: { user }, dispatch } = useContext(store)
@@ -43,7 +50,7 @@ function SignIn ({ navigation }) {
           } else if (errorCode === 'auth/wrong-password') {
             setSnack('The password is incorrect.')
           } else {
-            console.tron('[signInWithEmailAndPassword] error', errorMessage)
+            console.log('@tron', '[signInWithEmailAndPassword] error', errorMessage)
           }
         })
 
@@ -76,16 +83,24 @@ function SignIn ({ navigation }) {
   }, [user]) // eslint-disable-line
 
   return (
-    <Container onTouchStart={(ev) => {
-      Keyboard.dismiss()
-      ev.stopPropagation()
-    }}
+    <ScreenContainerView
+      onTouchStart={(ev) => {
+        Keyboard.dismiss()
+        ev.stopPropagation()
+      }}
     >
-      <Content>
-        <Logo />
+      <Content
+        contentContainerStyle={{
+          alignItems: 'center',
+          alignSelf: 'stretch',
+          flex: 1
+        }}
+      >
+        <Logo source={require('../../assets/logo.png')} />
         <Title>SIGN IN</Title>
 
         <Input
+          autoCapitalize='none'
           label='Your email address'
           onChangeText={handleEmail}
           value={email}
@@ -93,6 +108,7 @@ function SignIn ({ navigation }) {
         />
         <Input
           secureTextEntry
+          autoCapitalize='none'
           label='Your password'
           onChangeText={handlePassword}
           value={password}
@@ -109,7 +125,7 @@ function SignIn ({ navigation }) {
       >
         {snackbar.text}
       </Snackbar>
-    </Container>
+    </ScreenContainerView>
   )
 }
 

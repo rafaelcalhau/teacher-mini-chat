@@ -1,21 +1,17 @@
-import styled from 'styled-components/native'
-import { Platform } from 'react-native'
+import styled from '@emotion/native'
 
-const behavior = Platform.select({
-  android: 'height',
-  ios: 'padding'
-})
+export const ScreenContainerView = styled.View`
+  align-items: center;
+  align-self: stretch;
+  background-color: white;
+  flex: 1;
+  padding: 10px;
+  width: 100%;
+`
 
-export const KeyboardAvoidingView = styled.KeyboardAvoidingView.attrs({
-  behavior,
-  enabled: Platform.OS === 'ios'
-})``
-
-export const Loader = styled.ActivityIndicator.attrs({
-  color: ({ theme }) => theme.colors.primary,
-  size: 'small'
-})`
+export const Loader = styled.ActivityIndicator`
   align-self: center;
+  color: ${({ theme }) => theme.colors.primary};
   margin: 15px 0
 `
 

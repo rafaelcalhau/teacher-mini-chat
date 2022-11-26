@@ -1,4 +1,4 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
 import { Text as BaseText } from '../../../components/SharedStyled'
 
 export const Bubble = styled.View`

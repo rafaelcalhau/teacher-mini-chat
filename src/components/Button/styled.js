@@ -1,4 +1,4 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
 import { Text } from '../SharedStyled'
 
 export const Button = styled.TouchableOpacity`

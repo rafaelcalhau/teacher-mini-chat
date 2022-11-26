@@ -1,12 +1,10 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
 import LineIcon from 'react-native-vector-icons/SimpleLineIcons'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 import { Avatar as PaperAvatar } from 'react-native-paper'
 import { Text } from '../../components/SharedStyled'
 
-export const Avatar = styled(PaperAvatar.Image).attrs({
-  size: 36
-})`
+export const Avatar = styled(PaperAvatar.Image)`
   background-color: transparent;
   margin-left: 15px
 `
@@ -18,9 +16,7 @@ export const Body = styled.View`
   border-bottom-width: 50px;
 `
 
-export const BackIcon = styled(IonIcon).attrs({
-  size: 34
-})`
+export const BackIcon = styled(IonIcon)`
   color: ${({ theme }) => theme.colors.primary}
 `
 
@@ -49,26 +45,9 @@ export const FormControls = styled.View`
   padding: 0 10px;
 `
 
-export const FormIcons = {
-  Camera: styled(LineIcon).attrs({
-    name: 'camera',
-    size: 22
-  })`
-    color: white
-  `,
-  Mic: styled(LineIcon).attrs({
-    name: 'microphone',
-    size: 22
-  })`
-    color: white
-  `,
-  Send: styled(IonIcon).attrs({
-    name: 'send',
-    size: 22
-  })`
-    color: white
-  `
-}
+export const FormIcon = styled(LineIcon)`
+  color: white;
+`
 
 export const Header = styled.View`
   align-items: center;
@@ -91,11 +70,7 @@ export const IconButton = styled.TouchableOpacity`
   width: 40px;
 `
 
-export const Input = styled.TextInput.attrs({
-  autoCapitalize: 'none',
-  autoCorrect: false,
-  placeholderTextColor: 'rgba(255, 255, 255, .5)'
-})`
+export const Input = styled.TextInput`
   background-color: rgba(255, 255, 255, .3);
   border-radius: 20px;
   color: white;
