@@ -1,9 +1,9 @@
 import styled from '@emotion/native'
-import { Text as BaseText } from '../../../components/SharedStyled'
+import { Text as BaseText } from '@app/components/SharedStyled'
 
 export const Bubble = styled.View`
   align-self: ${({ self }) => self ? 'flex-end' : 'flex-start'};
-  background-color: ${({ self, theme }) => !self ? theme.colors.primaryLight : theme.colors.primary}
+  background-color: ${({ self, theme }) => !self ? theme.colors.primaryLight : theme.colors.primary};
   border-radius: 5px;
   flex-direction: row;
   padding: 15px 25px 20px 15px;
@@ -11,7 +11,7 @@ export const Bubble = styled.View`
 `
 
 export const BubbleArrow = styled.View`
-  border-color: ${({ self, theme }) => !self ? theme.colors.primaryLight : theme.colors.primary}
+  border-color: ${({ self, theme }) => !self ? theme.colors.primaryLight : theme.colors.primary};
   ${
     ({ self, theme }) => self
       ? `
@@ -43,16 +43,16 @@ export const BubbleArrow = styled.View`
   bottom: 20px;
   left: ${({ self, theme }) => self ? 'auto' : '-15px'};
   right: ${({ self, theme }) => self ? '0' : 'auto'};
-  z-index: -1
+  z-index: -1;
 `
 
 export const Text = styled(BaseText)`
-  color: ${({ self, theme }) => !self ? theme.colors.text.default : theme.colors.primaryLight}
+  color: ${({ self, theme }) => !self ? theme.colors.text.default : theme.colors.primaryLight};
   font-size: 14px;
 `
 
 export const Time = styled(BaseText)`
-  color: ${({ theme }) => theme.colors.gray}
+  color: ${({ theme }) => theme.colors.gray};
   font-size: 10px;
   position: absolute;
   right: 6px;
@@ -61,5 +61,5 @@ export const Time = styled(BaseText)`
 
 export const Wrapper = styled.View`
   padding: 5px 15px;
-  margin: 2px 0
+  margin: 2px 0;
 `
