@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Keyboard, View } from 'react-native'
 import { Snackbar } from 'react-native-paper'
+
+import { ROUTES } from '@app/constants'
 import { signin, getProfile } from '@app/services/firebase'
 import { User as UserStorage } from '@app/services/localstorage'
 import { store } from '@app/store'
@@ -26,7 +28,7 @@ function SignIn ({ navigation }) {
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
 
   function goToSignUp () {
-    navigation.navigate('SignUp')
+    navigation.navigate(ROUTES.SignUp)
   }
 
   function handleDismissSnackBar () {
@@ -81,7 +83,7 @@ function SignIn ({ navigation }) {
   // update when user is logged in
   useEffect(() => {
     if (user && user.uid) {
-      navigation.navigate('Chats')
+      navigation.navigate(ROUTES.Chats)
     }
   }, [user]) // eslint-disable-line
 

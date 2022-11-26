@@ -2,6 +2,7 @@ import { useEffect, useContext } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
+import { ROUTES } from '@app/constants';
 import { formatUserData } from '@app/modules/utils';
 import { getProfile, signin } from '@app/services/firebase';
 import { User as UserStorage } from '@app/services/localstorage'
@@ -17,7 +18,7 @@ const Root = ({ navigation }) => {
       const storedProfile = await UserStorage.get()
 
       if (!storedProfile) {
-        navigation.navigate('SignIn')
+        navigation.navigate(ROUTES.SignIn)
         return
       }
 
@@ -35,7 +36,7 @@ const Root = ({ navigation }) => {
               UserStorage.put({ ...storedProfile, ...userData })
 
               // Navigate user to Chats
-              navigation.navigate('Chats')
+              navigation.navigate(ROUTES.Chats)
             } else {
               console.log('@Root', 'Sorry, something wrong happened.')
             }
@@ -56,7 +57,7 @@ const Root = ({ navigation }) => {
           })
       } else {
         // Navigate user to Chats
-        navigation.navigate('SignIn')
+        navigation.navigate(ROUTES.SignIn)
       }
     }
 

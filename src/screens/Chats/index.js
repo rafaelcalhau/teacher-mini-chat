@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Keyboard } from 'react-native'
 import { Modal, Snackbar } from 'react-native-paper'
+
 import { SearchBox } from '@app/components'
 import { Loader } from '@app/components/SharedStyled'
+import { ROUTES } from '@app/constants'
 import { isValidEmail } from '@app/modules/utils'
 import { store } from '@app/store'
 import {
@@ -49,7 +51,7 @@ function Chats ({ navigation }) {
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
 
   function handleContactPressed (contact) {
-    navigation.navigate('Chat', { contact })
+    navigation.navigate(ROUTES.Chat, { contact })
   }
 
   function handleDismissSnackBar () {
@@ -60,7 +62,7 @@ function Chats ({ navigation }) {
     logout(dispatch)
 
     UserStorage.delete()
-    navigation.navigate('SignIn')
+    navigation.navigate(ROUTES.SignIn)
   }
 
   function handleNewContact () {

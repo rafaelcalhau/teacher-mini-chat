@@ -45,26 +45,26 @@ export const addEntryToContactList = async (userUid, contactUid) => {
         if (!contactData.contacts) {
           // create list
           await contactRef.set({ ...contactData, contacts: [userUid] })
-            .catch(error => console.log('@tron', '[firebase]: addEntryToContactList error on create', error.message))
+            .catch(error => console.log('[firebase]: addEntryToContactList error on create', error.message))
         } else {
           // update list
           if (contactData.contacts.indexOf(userUid) === -1) {
             const newList = [...contactData.contacts, userUid]
             await contactRef.set({ ...contactData, contacts: newList })
-              .catch(error => console.log('@tron', '[firebase]: addEntryToContactList error on update', error.message))
+              .catch(error => console.log('[firebase]: addEntryToContactList error on update', error.message))
           }
         }
 
         if (!userData.contacts) {
           // create list
           await userRef.set({ ...userData, contacts: [contactUid] })
-            .catch(error => console.log('@tron', '[firebase]: addEntryToContactList error on create', error.message))
+            .catch(error => console.log('[firebase]: addEntryToContactList error on create', error.message))
         } else {
           // update list
           if (userData.contacts.indexOf(contactUid) === -1) {
             const newList = [...userData.contacts, contactUid]
             await userRef.set({ ...userData, contacts: newList })
-              .catch(error => console.log('@tron', '[firebase]: addEntryToContactList error on update', error.message))
+              .catch(error => console.log('[firebase]: addEntryToContactList error on update', error.message))
           }
         }
       }
@@ -72,7 +72,7 @@ export const addEntryToContactList = async (userUid, contactUid) => {
       return current
     })
   } catch (error) {
-    console.log('@tron', '[firebase]: addEntryToContactList main error', error.message)
+    console.log('[firebase]: addEntryToContactList main error', error.message)
   }
 }
 
@@ -88,7 +88,7 @@ export const createContact = async (name, email, password) => {
     await database
       .ref(`/users/${user.uid}`)
       .set(userData)
-      .catch(error => console.log('@tron', '[firebase]: createContact error', error))
+      .catch(error => console.log('[firebase]: createContact error', error))
 
     return user.uid
   }
@@ -133,7 +133,7 @@ export const getContacts = async (uid) => {
           }
         })
     })))
-    .catch(error => console.log('@tron', '[firebase]: getContacts error', error.message))
+    .catch(error => console.log('[firebase]: getContacts error', error.message))
 }
 
 export const getProfile = async (uid) => {
@@ -143,7 +143,7 @@ export const getProfile = async (uid) => {
     .ref(`/users/${uid}`)
     .once('value')
     .then(snapshot => snapshot.val())
-    .catch(error => console.log('@tron', '[firebase]: getProfile error', error))
+    .catch(error => console.log('[firebase]: getProfile error', error))
 }
 
 export const getLastMessages = async (chatKey, length = 15) => {
@@ -162,7 +162,7 @@ export const getLastMessages = async (chatKey, length = 15) => {
 
       return []
     })
-    .catch(error => console.log('@tron', '[firebase]: getContacts error', error.message))
+    .catch(error => console.log('[firebase]: getContacts error', error.message))
 }
 
 export const logout = async (dispatch) => {
@@ -193,7 +193,7 @@ export const sendMessage = async (from, chatKey, text) => {
   return database
     .ref(`/messages/${chatKey}`)
     .update(messages)
-    .catch(error => console.log('@tron', '[firebase]: createContact error', error))
+    .catch(error => console.log('[firebase]: createContact error', error))
 }
 
 export const signin = async (email, password) => {
