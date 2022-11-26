@@ -1,22 +1,24 @@
 import React, { useContext, useState } from 'react'
 import { Keyboard } from 'react-native'
 import { Snackbar } from 'react-native-paper'
-import { store } from '../../store'
+import { store } from '@app/store'
 import {
-  Content,
   CustomButton,
   Form,
   Input,
   Logo,
   RadioGroup,
-  Row,
   Title
 } from './styled'
-import { User as UserStorage } from '../../services/localstorage'
-import { isValidEmail, formatUserData } from '../../modules/utils'
-import { registerProfile, signup } from '../../services/firebase'
-import { authenticate } from '../../store/actions'
-import { ScreenContainerView } from '../../components/SharedStyled'
+import { User as UserStorage } from '@app/services/localstorage'
+import { isValidEmail, formatUserData } from '@app/modules/utils'
+import { registerProfile, signup } from '@app/services/firebase'
+import { authenticate } from '@app/store/actions'
+import {
+  FormScrollView,
+  Grid,
+  ScreenContainerView
+} from '@app/components/SharedStyled'
 
 function SignUp ({ navigation }) {
   const { dispatch } = useContext(store)
@@ -91,12 +93,11 @@ function SignUp ({ navigation }) {
 
   return (
     <ScreenContainerView onTouchStart={() => Keyboard.dismiss()}>
-      <Content
+      <FormScrollView
         contentContainerStyle={{
           alignItems: 'center',
           alignSelf: 'stretch',
           justifyContent: 'center',
-          padding: 5,
           flex: 1
         }}
       >
@@ -118,49 +119,53 @@ function SignUp ({ navigation }) {
             width='80%'
           />
 
-          <Row>
-            <Input
-              autoCapitalize='none'
-              label='Your name'
-              onChangeText={handleName}
-              value={name}
-              width='80%'
-            />
-          </Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Input
+                autoCapitalize='none'
+                label='Your name'
+                onChangeText={handleName}
+                value={name}
+              />
+            </Grid.Column>
+          </Grid.Row>
           
-          <Row>
-            <Input
-              autoCapitalize='none'
-              label='Your email address'
-              onChangeText={handleEmail}
-              value={email}
-              width='80%'
-            />
-          </Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Input
+                autoCapitalize='none'
+                label='Your email address'
+                onChangeText={handleEmail}
+                value={email}
+              />
+            </Grid.Column>
+          </Grid.Row>
 
-          <Row>
-            <Input
-              secureTextEntry
-              autoCapitalize='none'
-              label='Your password'
-              onChangeText={handlePassword}
-              value={password}
-              width='80%'
-            />
-            <Input
-              autoCapitalize='none'
-              secureTextEntry
-              label='Confirm password'
-              onChangeText={handlePasswordConfirmation}
-              value={passwordConfirmation}
-              width='80%'
-            />
-          </Row>
+          <Grid.Row direction='row'>
+            <Grid.Column size='50%'>
+              <Input
+                secureTextEntry
+                autoCapitalize='none'
+                label='Your password'
+                onChangeText={handlePassword}
+                value={password}
+              />
+            </Grid.Column>
+            <Grid.Column size='50%'>
+              <Input
+                autoCapitalize='none'
+                secureTextEntry
+                label='Confirm password'
+                onChangeText={handlePasswordConfirmation}
+                value={passwordConfirmation}
+              />
+            </Grid.Column>
+          </Grid.Row>
         </Form>
 
-        <CustomButton loading={isAuthenticating} label='REGISTER' width='80%' onPress={handleRegister} />
-        <CustomButton outline label='BACK' width='80%' onPress={handleBack} />
-      </Content>
+        <CustomButton loading={isAuthenticating} label='REGISTER' onPress={handleRegister} />
+        <CustomButton outline label='BACK' onPress={handleBack} />
+      </FormScrollView>
 
       <Snackbar
         visible={snackbar.visible}

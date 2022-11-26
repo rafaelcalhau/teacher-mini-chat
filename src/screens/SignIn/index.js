@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Keyboard } from 'react-native'
+import { Keyboard, View } from 'react-native'
 import { Snackbar } from 'react-native-paper'
-import { signin, getProfile } from '../../services/firebase'
-import { User as UserStorage } from '../../services/localstorage'
-import { store } from '../../store'
-import { authenticate } from '../../store/actions'
-import { isValidEmail, formatUserData } from '../../modules/utils'
+import { signin, getProfile } from '@app/services/firebase'
+import { User as UserStorage } from '@app/services/localstorage'
+import { store } from '@app/store'
+import { authenticate } from '@app/store/actions'
+import { isValidEmail, formatUserData } from '@app/modules/utils'
 import {
-  Content,
   CustomButton,
   Input,
   Logo,
   Title
 } from './styled'
-import { ScreenContainerView } from '../../components/SharedStyled'
+import {
+  FormScrollView,
+  Grid,
+  ScreenContainerView
+} from '@app/components/SharedStyled'
 
 function SignIn ({ navigation }) {
   const { state: { user }, dispatch } = useContext(store)
@@ -89,10 +92,11 @@ function SignIn ({ navigation }) {
         ev.stopPropagation()
       }}
     >
-      <Content
+      <FormScrollView
         contentContainerStyle={{
           alignItems: 'center',
           alignSelf: 'stretch',
+          justifyContent: 'center',
           flex: 1
         }}
       >
@@ -104,7 +108,6 @@ function SignIn ({ navigation }) {
           label='Your email address'
           onChangeText={handleEmail}
           value={email}
-          width='80%'
         />
         <Input
           secureTextEntry
@@ -112,12 +115,13 @@ function SignIn ({ navigation }) {
           label='Your password'
           onChangeText={handlePassword}
           value={password}
-          width='80%'
         />
 
-        <CustomButton loading={isAuthenticating} label='LOGIN' width='80%' onPress={handleLogin} />
-        <CustomButton outline label='CREATE ACCOUNT' width='80%' onPress={goToSignUp} />
-      </Content>
+        <Grid.Row>
+          <CustomButton loading={isAuthenticating} label='LOGIN' onPress={handleLogin} />
+          <CustomButton outline label='CREATE ACCOUNT' onPress={goToSignUp} />
+        </Grid.Row>
+      </FormScrollView>
 
       <Snackbar
         visible={snackbar.visible}

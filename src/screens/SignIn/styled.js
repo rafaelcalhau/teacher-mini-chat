@@ -1,10 +1,10 @@
 import styled from '@emotion/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Text } from '../../components/SharedStyled'
-import { Button, InputText } from '../../components'
+import { Text } from '@app/components/SharedStyled'
+import { Button, InputText } from '@app/components'
 
 export const CustomButton = styled(Button)`
-  margin: 10px 0;
+  margin: 5px 0;
 `
 
 export const Container = styled.View`
@@ -14,12 +14,8 @@ export const Container = styled.View`
   padding: 20px
 `
 
-export const Content = styled(KeyboardAwareScrollView)`
-  width: 100%
-`
-
 export const Input = styled(InputText)`
-  margin: 10px 0
+  padding: 10px;
 `
 
 export const Logo = styled.Image`
