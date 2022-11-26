@@ -11,5 +11,29 @@
 1: Install the project dependencies:
 
 ```bash
-$ yarn # npm install
+$ npm install # yarn
 ```
+
+2: Copy the .env.example to .env and update the values with your firebase credentials
+
+```bash
+$ cp .env.example .env
+```
+
+3: Run the project, you can visualize the app in your smartphone through the expo go:
+
+```bash
+$ npm start # yarn start
+```
+
+## Screenshoots
+
+![TeacherMiniChat](docs/IMG_8520.PNG)
+![TeacherMiniChat](docs/IMG_8521.jpeg)
+![TeacherMiniChat](docs/IMG_8522.PNG)
+![TeacherMiniChat](docs/IMG_8523.PNG)
+![TeacherMiniChat](docs/IMG_8524.PNG)
+![TeacherMiniChat](docs/IMG_8528.PNG)
+![TeacherMiniChat](docs/IMG_8529.PNG)
+![TeacherMiniChat](docs/IMG_8530.PNG)
+![TeacherMiniChat](docs/IMG_8531.PNG)
