@@ -1,13 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Keyboard } from 'react-native'
 import { Modal, Snackbar } from 'react-native-paper'
-import { SearchBox } from '../../components'
-import { Loader } from '../../components/SharedStyled'
-import { isValidEmail } from '../../modules/utils'
-import { store } from '../../store'
+import { SearchBox } from '@app/components'
+import { Loader } from '@app/components/SharedStyled'
+import { isValidEmail } from '@app/modules/utils'
+import { store } from '@app/store'
+import {
+  addEntryToContactList,
+  createContact,
+  getContacts,
+  logout
+} from '@app/services/firebase'
+import { User as UserStorage } from '@app/services/localstorage'
+
 import Contact from './Contact'
 import {
-  AvatarAlumini,
   Body,
   ButtonLogout,
   ButtonSubmitNewContact,
@@ -20,19 +27,13 @@ import {
   HeaderBody,
   HeaderIcon,
   Input,
+  StudentAvatar,
   Title,
   UserName,
   UserType,
   ZeroContactsText,
   ZeroContactsView
 } from './styled'
-import {
-  addEntryToContactList,
-  createContact,
-  getContacts,
-  logout
-} from '../../services/firebase'
-import { User as UserStorage } from '../../services/localstorage'
 
 function Chats ({ navigation }) {
   const { dispatch, state: { user } } = useContext(store)
@@ -105,7 +106,7 @@ function Chats ({ navigation }) {
     if (!contacts.length) {
       return (
         <ZeroContactsView>
-          <AvatarAlumini source={require('../../assets/avatar-alumni-large.png')} />
+          <StudentAvatar source={require('@app/assets/avatar-alumni-large.png')} />
           <ZeroContactsText>Your contact list is empty</ZeroContactsText>
         </ZeroContactsView>
       )
@@ -172,7 +173,7 @@ function Chats ({ navigation }) {
             autoCapitalize='none'
             autoCorrect={false}
             onChangeText={setSearchKeywords}
-            placeholder='Search alumnis...'
+            placeholder='Search students...'
             value={searchKeywords}
           />
 

@@ -5,11 +5,6 @@ import { FAB } from 'react-native-paper'
 import { Button, InputText } from '../../components'
 import { Text } from '../../components/SharedStyled'
 
-export const AvatarAlumini = styled.Image`
-  align-self: center;
-  margin-bottom: 25px
-`
-
 export const Body = styled.View`
   flex: 1
 `
@@ -71,14 +66,19 @@ export const Input = styled(InputText)`
   margin: ${({ last }) => !last ? '15px 0 0 0' : '15px 0'}
 `
 
+export const HeaderIcon = styled(AntIcons)`
+  color: ${({ theme }) => theme.colors.primary}
+`
+
+export const StudentAvatar = styled.Image`
+  align-self: center;
+  margin-bottom: 25px
+`
+
 export const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.dark};
   font-size: 28px;
   font-weight: bold;
-`
-
-export const HeaderIcon = styled(AntIcons)`
-  color: ${({ theme }) => theme.colors.primary}
 `
 
 export const UserName = styled(Text)`

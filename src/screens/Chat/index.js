@@ -5,8 +5,10 @@ import { Snackbar } from 'react-native-paper'
 import { store } from '@app/store'
 import { Loader } from '@app/components/SharedStyled'
 import {
-  getLastMessages, sendMessage,
-  subscribeToNewMessages, unsubscribeToNewMessages
+  getLastMessages,
+  sendMessage,
+  subscribeToNewMessages,
+  unsubscribeToNewMessages
 } from '@app/services/firebase'
 
 import ChatList from './ChatList'
@@ -27,10 +29,10 @@ import {
   Wrapper
 } from './styled'
 
-function Chat ({ navigation }) {
+function Chat ({ navigation, route }) {
+  const { contact } = route.params
   const { state: { user } } = useContext(store)
   const [chatKey, setChatKey] = useState('')
-  const [contact] = useState(navigation.getParam('contact'))
   const [messages, setMessages] = useState([])
   const [messagesLoaded, setMessagesLoaded] = useState(false)
   const [snackbar, handleSnackbar] = useState({ visible: false, text: '' })
