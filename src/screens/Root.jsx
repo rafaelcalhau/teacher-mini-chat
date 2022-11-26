@@ -20,7 +20,6 @@ const Root = ({ navigation }) => {
       const loadProfile = async () => {
         try {
           const profile = await getProfile(user.uid)
-          console.log('@tron', profile)
 
           if (profile) {
             dispatch(updateUser({

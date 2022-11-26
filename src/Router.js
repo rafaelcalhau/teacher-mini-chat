@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 
 // Screens
+import Chat from './screens/Chat';
+import Chats from './screens/Chats';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Root from './screens/Root';
@@ -20,16 +22,14 @@ const Router = () => {
 
   // didMount
   useEffect(() => {
-    console.log('@hey')
     SplashScreen.hideAsync()
     navigation.navigate('Root');
   }, [])
 
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen name='Chat' component={Chat} />
-      <Stack.Screen name='Chats' component={Chats} />
-      */}
+      <Stack.Screen name='Chat' component={Chat} options={screenDefaultOptions} />
+      <Stack.Screen name='Chats' component={Chats} options={screenDefaultOptions} />
       <Stack.Screen name='SignIn' component={SignIn} options={screenDefaultOptions} />
       <Stack.Screen name='SignUp' component={SignUp} options={screenDefaultOptions} />
       <Stack.Screen name='Root' component={Root} options={screenDefaultOptions} />

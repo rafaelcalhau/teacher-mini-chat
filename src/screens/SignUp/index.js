@@ -52,8 +52,30 @@ function SignUp ({ navigation }) {
     } else {
       setIsAuthenticating(true)
 
-      const displayName = name
-      const { user } = await signup(email, password)
+      await signup(email, password)
+        .then(async ({ user }) => {
+          if (user) {
+            const profile = formatUserData({ ...user, displayName: name })
+
+            if (!profile) {
+              setSnack('Sorry, something went wrong with your profile data.')
+              return
+            }
+    
+            // Register profile on database
+            const registration = await registerProfile(profile.uid, { accountType, name })
+              .then(() => true)
+              .catch(err => {
+                setSnack(err?.message ?? 'Sorry, something went wrong with your registration.')
+                return null
+              })
+
+            if (!registration) return
+            handleBack()
+          } else {
+            setSnack('Sorry, something went wrong.')
+          }
+        })
         .catch(error => {
           const errorCode = error.code
           const errorMessage = error.message
@@ -64,26 +86,7 @@ function SignUp ({ navigation }) {
             setSnack(errorMessage)
           }
         })
-
-      if (user) {
-        const profile = formatUserData({ ...user._user, displayName })
-
-        // Register profile on database
-        await registerProfile(profile.uid, {
-          accountType,
-          name: displayName
-        })
-
-        // Register on global state
-        dispatch(authenticate(profile))
-
-        // Register user on local storage
-        UserStorage.put({ accountType, ...profile })
-      } else {
-        setSnack('Sorry, something wrong happened.')
-      }
-
-      setIsAuthenticating(false)
+        .finally(() => setIsAuthenticating(false))
     }
   }
 
@@ -135,6 +138,7 @@ function SignUp ({ navigation }) {
               <Input
                 autoCapitalize='none'
                 label='Your email address'
+                keyboardType='email-address'
                 onChangeText={handleEmail}
                 value={email}
               />

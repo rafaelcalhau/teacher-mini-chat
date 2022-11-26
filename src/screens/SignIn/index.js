@@ -41,7 +41,21 @@ function SignIn ({ navigation }) {
     } else {
       setIsAuthenticating(true)
 
-      const { user } = await signin(email, password)
+      await signin(email, password)
+        .then(async ({ user }) => {
+          if (user) {
+            const userData = formatUserData(user)
+            const profile = await getProfile(userData.uid)
+    
+            // Register the authentication
+            dispatch(authenticate({ ...userData, ...profile }))
+    
+            // Register user on local storage
+            UserStorage.put(userData)
+          } else {
+            setSnack('Sorry, something wrong happened.')
+          }
+        })
         .catch(error => {
           const errorCode = error.code
           const errorMessage = error.message
@@ -56,21 +70,7 @@ function SignIn ({ navigation }) {
             console.log('@tron', '[signInWithEmailAndPassword] error', errorMessage)
           }
         })
-
-      if (user) {
-        const userData = formatUserData({ ...user._user })
-        const profile = await getProfile(userData.uid)
-
-        // Register the authentication
-        dispatch(authenticate({ ...userData, ...profile }))
-
-        // Register user on local storage
-        UserStorage.put(userData)
-      } else {
-        setSnack('Sorry, something wrong happened.')
-      }
-
-      setIsAuthenticating(false)
+        .finally(() => setIsAuthenticating(false))
     }
   }
 
@@ -106,6 +106,7 @@ function SignIn ({ navigation }) {
         <Input
           autoCapitalize='none'
           label='Your email address'
+          keyboardType='email-address'
           onChangeText={handleEmail}
           value={email}
         />

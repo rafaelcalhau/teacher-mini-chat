@@ -27,8 +27,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Initialize auth
-export const auth = firebase.auth();
-
+const auth = firebase.auth();
 
 export const addEntryToContactList = async (userUid, contactUid) => {
   try {
@@ -75,7 +74,7 @@ export const addEntryToContactList = async (userUid, contactUid) => {
 }
 
 export const createContact = async (name, email, password) => {
-  const { user } = await auth().createUserWithEmailAndPassword(email, password)
+  const { user } = await auth.createUserWithEmailAndPassword(email, password)
 
   if (user && user.uid) {
     const userData = {
@@ -164,18 +163,18 @@ export const getLastMessages = async (chatKey, length = 15) => {
 }
 
 export const logout = async (dispatch) => {
-  auth().signOut()
+  auth.signOut()
 
-  if (dispatch) {
-    dispatch(signout())
-  }
+  if (dispatch) dispatch(signout())
 }
 
 export const registerProfile = async (uid, data) => {
+  if (!uid) return null
+
   return firebase.database()
     .ref(`/users/${uid}`)
     .set(data)
-    .catch(error => console.log('@tron', '[firebase]: registerProfile error', error))
+    .catch(error => console.log('[firebase]: registerProfile error', error))
 }
 
 export const sendMessage = async (from, chatKey, text) => {
@@ -195,11 +194,11 @@ export const sendMessage = async (from, chatKey, text) => {
 }
 
 export const signin = async (email, password) => {
-  return auth().signInWithEmailAndPassword(email, password)
+  return auth.signInWithEmailAndPassword(email, password)
 }
 
 export const signup = async (email, password) => {
-  return auth().createUserWithEmailAndPassword(email, password)
+  return auth.createUserWithEmailAndPassword(email, password)
 }
 
 export const subscribeToNewMessages = async (chatKey, callback) => {
