@@ -19,8 +19,8 @@ export const Input = styled(InputText)`
 
 export const Logo = styled.Image`
   margin: 0 48px 20px;
-  height: 60px;
-  width: 183px;
+  height: 80px;
+  width: 120px;
 `
 
 export const Title = styled(Text)`
