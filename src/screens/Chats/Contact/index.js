@@ -9,7 +9,7 @@ function Contact (props) {
   const { accountType, lastMessage, name, newMessages } = props.data
   const handlePress = onPress || (() => null)
   const iconName = accountType === 'student' ? 'user-graduate' : 'user-tie'
-  const image = props.image || require('../../../assets/alumni-avatar-small.png')
+  const image = props.image || require('@app/assets/student-avatar-small.png')
   const thereIsLastMessage = (lastMessage?.length ?? 0) > 0
 
   return (

@@ -37,10 +37,10 @@ import {
 
 function Chats ({ navigation }) {
   const { dispatch, state: { user } } = useContext(store)
-  const [alumniName, setAlumniName] = useState('')
-  const [alumniEmail, setAlumniEmail] = useState('')
-  const [alumniPassword, setAlumniPassword] = useState('')
-  const [alumniPasswordConfirmation, setAlumniPasswordConfirmation] = useState('')
+  const [studentName, setStudentName] = useState('')
+  const [studentEmail, setStudentEmail] = useState('')
+  const [studentPassword, setStudentPassword] = useState('')
+  const [studentPasswordConfirmation, setStudentPasswordConfirmation] = useState('')
   const [contacts, setContacts] = useState([])
   const [contactsLoaded, setContactsLoaded] = useState(false)
   const [isAddingContact, setIsAddingContact] = useState(false)
@@ -68,24 +68,24 @@ function Chats ({ navigation }) {
   }
 
   async function handleNewContactSubmit () {
-    if (!alumniName.length) {
+    if (!studentName.length) {
       setSnack('Please enter the Name')
-    } else if (!isValidEmail(alumniEmail)) {
+    } else if (!isValidEmail(studentEmail)) {
       setSnack('Please enter a valid Email Address')
-    } else if (alumniPassword.length < 6) {
+    } else if (studentPassword.length < 6) {
       setSnack('Your password must have atleast 6 characters.')
-    } else if (alumniPasswordConfirmation !== alumniPassword) {
+    } else if (studentPasswordConfirmation !== studentPassword) {
       setSnack('Your password confirmation failed.')
     } else {
       setIsAddingContact(true)
 
-      createContact(alumniName, alumniEmail, alumniPassword)
+      createContact(studentName, studentEmail, studentPassword)
         .then(async contactUid => {
           if (contactUid) {
             // register on teacher contact list
             await addEntryToContactList(user.uid, contactUid)
             setContacts(contacts => [...contacts, {
-              name: alumniName
+              name: studentName
             }])
           }
     
@@ -106,7 +106,7 @@ function Chats ({ navigation }) {
     if (!contacts.length) {
       return (
         <ZeroContactsView>
-          <StudentAvatar source={require('@app/assets/avatar-alumni-large.png')} />
+          <StudentAvatar source={require('@app/assets/student-avatar-large.png')} />
           <ZeroContactsText>Your contact list is empty</ZeroContactsText>
         </ZeroContactsView>
       )
@@ -124,10 +124,10 @@ function Chats ({ navigation }) {
   }
 
   function resetNewContactForm () {
-    setAlumniName('')
-    setAlumniEmail('')
-    setAlumniPassword('')
-    setAlumniPasswordConfirmation('')
+    setStudentName('')
+    setStudentEmail('')
+    setStudentPassword('')
+    setStudentPasswordConfirmation('')
   }
 
   function setSnack (text = '') {
@@ -204,29 +204,29 @@ function Chats ({ navigation }) {
 
           <Input
             label='Name'
-            onChangeText={setAlumniName}
-            value={alumniName}
+            onChangeText={setStudentName}
+            value={studentName}
             autoCapitalize='none'
           />
           <Input
             label='Email'
-            onChangeText={setAlumniEmail}
-            value={alumniEmail}
+            onChangeText={setStudentEmail}
+            value={studentEmail}
             keyboardType='email-address'
             autoCapitalize='none'
           />
           <Input
             secureTextEntry
             label='Password'
-            onChangeText={setAlumniPassword}
-            value={alumniPassword}
+            onChangeText={setStudentPassword}
+            value={studentPassword}
             autoCapitalize='none'
           />
           <Input
             secureTextEntry
             label='Confirm Password'
-            onChangeText={setAlumniPasswordConfirmation}
-            value={alumniPasswordConfirmation}
+            onChangeText={setStudentPasswordConfirmation}
+            value={studentPasswordConfirmation}
             autoCapitalize='none'
           />
 

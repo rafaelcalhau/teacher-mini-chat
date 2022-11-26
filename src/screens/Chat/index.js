@@ -55,7 +55,7 @@ function Chat ({ navigation, route }) {
   }
 
   function renderAvatar () {
-    return contact.image || require('../../assets/alumni-avatar-small.png')
+    return contact.image || require('@app/assets/student-avatar-small.png')
   }
 
   // onMount
