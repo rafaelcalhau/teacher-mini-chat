@@ -149,7 +149,7 @@ function Chats ({ navigation }) {
     }
 
     loadContacts()
-  }, []) // eslint-disable-line
+  }, [user]) // eslint-disable-line
 
   return (
     <>
