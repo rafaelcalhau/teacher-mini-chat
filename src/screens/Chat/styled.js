@@ -79,6 +79,10 @@ export const Input = styled.TextInput`
   height: 34px
 `
 
+export const SendIcon = styled(IonIcon)`
+  color: white
+`
+
 export const UserName = styled(Text)`
   color: ${({ theme }) => theme.colors.silver};
   font-size: 17px

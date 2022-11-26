@@ -24,6 +24,7 @@ import {
   HeaderBody,
   IconButton,
   Input,
+  SendIcon,
   UserName,
   UserType,
   Wrapper
@@ -145,7 +146,7 @@ function Chat ({ navigation, route }) {
                   </>
                 ) : (
                   <IconButton onPress={handleSend}>
-                    <FormIcon name='send' size={22} />
+                    <SendIcon name='send' size={22} />
                   </IconButton>
                 )
             }
