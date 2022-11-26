@@ -149,17 +149,15 @@ export const getProfile = async (uid) => {
 export const getLastMessages = async (chatKey, length = 15) => {
   return database
     .ref(`/messages/${chatKey}`)
-    .orderByKey()
+    .orderByChild('createdAt')
     .limitToLast(length)
     .once('value')
     .then(snapshot => {
       const messages = snapshot.val()
-      console.log('@tron', '[firebase]: getLastMessages', messages)
 
       if (messages) {
         return Object.keys(messages)
           .map(key => ({ key, ...messages[key] }))
-          .sort((a, b) => a > b ? 1 : -1)
       }
 
       return []
