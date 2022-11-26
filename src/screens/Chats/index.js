@@ -27,8 +27,10 @@ import {
   ZeroContactsView
 } from './styled'
 import {
-  addEntryToContactList, createContact,
-  logout, getContacts
+  addEntryToContactList,
+  createContact,
+  getContacts,
+  logout
 } from '../../services/firebase'
 import { User as UserStorage } from '../../services/localstorage'
 
@@ -76,18 +78,20 @@ function Chats ({ navigation }) {
     } else {
       setIsAddingContact(true)
 
-      const contactUid = await createContact(alumniName, alumniEmail, alumniPassword)
-
-      if (contactUid) {
-        // register on teacher contact list
-        await addEntryToContactList(user.uid, contactUid)
-        setContacts(contacts => [...contacts, {
-          name: alumniName
-        }])
-      }
-
-      resetNewContactForm()
-      setIsAddingContact(false)
+      createContact(alumniName, alumniEmail, alumniPassword)
+        .then(async contactUid => {
+          if (contactUid) {
+            // register on teacher contact list
+            await addEntryToContactList(user.uid, contactUid)
+            setContacts(contacts => [...contacts, {
+              name: alumniName
+            }])
+          }
+    
+          resetNewContactForm()
+        })
+        .catch(err => setSnack(err?.message ?? 'Whoops, something went wrong.'))
+        .finally(() => setIsAddingContact(false))
     }
   }
 
@@ -131,11 +135,16 @@ function Chats ({ navigation }) {
 
   // onMount
   useEffect(() => {
+    if (!user.uid) return
     const loadContacts = async () => {
-      const contacts = (await getContacts(user.uid)) || []
+      try {
+        const contacts = (await getContacts(user.uid)) || []
 
-      setContacts(contacts)
-      setContactsLoaded(true)
+        setContacts(contacts)
+        setContactsLoaded(true)
+      } catch (error) {
+        setSnack(error?.message ?? 'Whoops, something went wrong.')
+      }
     }
 
     loadContacts()
@@ -202,6 +211,7 @@ function Chats ({ navigation }) {
             label='Email'
             onChangeText={setAlumniEmail}
             value={alumniEmail}
+            keyboardType='email-address'
             autoCapitalize='none'
           />
           <Input

@@ -11,7 +11,3 @@ export const authenticationIsVerified = () => {
 export const signout = () => {
   return { type: ActionTypes.SIGN_OUT }
 }
-
-export const updateUser = (payload) => {
-  return { type: ActionTypes.UPDATE_USER, payload }
-}

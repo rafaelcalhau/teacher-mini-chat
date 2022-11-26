@@ -1,18 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { NativeModules, Platform } from 'react-native'
 import { Snackbar } from 'react-native-paper'
-import { store } from '../../store'
-import { Loader } from '../../components/SharedStyled'
-import {
-  Avatar, BackIcon, Body, Container, Form, FormControls, FormIcon,
-  Header, HeaderBody, IconButton, Input, UserName,
-  UserType, Wrapper
-} from './styled'
+
+import { store } from '@app/store'
+import { Loader } from '@app/components/SharedStyled'
 import {
   getLastMessages, sendMessage,
   subscribeToNewMessages, unsubscribeToNewMessages
-} from '../../services/firebase'
+} from '@app/services/firebase'
+
 import ChatList from './ChatList'
+import {
+  Avatar,
+  BackIcon,
+  Body,
+  Container,
+  Form,
+  FormControls,
+  FormIcon,
+  Header,
+  HeaderBody,
+  IconButton,
+  Input,
+  UserName,
+  UserType,
+  Wrapper
+} from './styled'
 
 function Chat ({ navigation }) {
   const { state: { user } } = useContext(store)
@@ -41,10 +54,6 @@ function Chat ({ navigation }) {
   function renderAvatar () {
     return contact.image || require('../../assets/alumni-avatar-small.png')
   }
-
-  // function setSnack (text = '') {
-  //   handleSnackbar({ visible: true, text })
-  // }
 
   // onMount
   useEffect(() => {

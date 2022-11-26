@@ -51,7 +51,7 @@ function SignIn ({ navigation }) {
             dispatch(authenticate({ ...userData, ...profile }))
     
             // Register user on local storage
-            UserStorage.put(userData)
+            UserStorage.put({ ...userData, password })
           } else {
             setSnack('Sorry, something wrong happened.')
           }

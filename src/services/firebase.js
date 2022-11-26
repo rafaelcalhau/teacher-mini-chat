@@ -29,12 +29,15 @@ firebase.initializeApp(firebaseConfig);
 // Initialize auth
 const auth = firebase.auth();
 
+// Initialize database
+const database = firebase.database();
+
 export const addEntryToContactList = async (userUid, contactUid) => {
   try {
-    const contactRef = await database().ref(`/users/${contactUid}`)
+    const contactRef = database.ref(`/users/${contactUid}`)
     const contactData = await contactRef.once('value').then(snapshot => snapshot.val())
 
-    const userRef = await database().ref(`/users/${userUid}`)
+    const userRef = database.ref(`/users/${userUid}`)
     const userData = await userRef.once('value').then(snapshot => snapshot.val())
 
     userRef.transaction(async current => {
@@ -82,7 +85,7 @@ export const createContact = async (name, email, password) => {
       name
     }
 
-    await firebase.database()
+    await database
       .ref(`/users/${user.uid}`)
       .set(userData)
       .catch(error => console.log('@tron', '[firebase]: createContact error', error))
@@ -94,12 +97,14 @@ export const createContact = async (name, email, password) => {
 }
 
 export const getContacts = async (uid) => {
-  return firebase.database()
+  if (!uid) return null
+
+  return database
     .ref(`/users/${uid}/contacts`)
     .once('value')
     .then(snapshot => snapshot.val())
-    .then(async contacts => Promise.all(contacts.map(contactUid => {
-      return firebase.database()
+    .then(async contacts => Promise.all(contacts.map(async contactUid => {
+      return database
         .ref(`/users/${contactUid}`)
         .once('value')
         .then(async (snapshot) => {
@@ -107,13 +112,13 @@ export const getContacts = async (uid) => {
           const uids = [uid, contactUid].sort((a, b) => a > b ? 1 : -1)
           const chatKey = uids.join('')
 
-          const lastMessage = await database()
+          const lastMessage = await database
             .ref(`/messages/${chatKey}`)
             .limitToLast(1)
             .once('value')
             .then(snapshot => snapshot.val())
 
-          const newMessages = await database()
+          const newMessages = await database
             .ref(`/users/${uid}/unreaded_messages`)
             .orderByChild('from')
             .equalTo(contactUid)
@@ -134,7 +139,7 @@ export const getContacts = async (uid) => {
 export const getProfile = async (uid) => {
   if (!uid) return null;
 
-  return firebase.database()
+  return database
     .ref(`/users/${uid}`)
     .once('value')
     .then(snapshot => snapshot.val())
@@ -142,7 +147,7 @@ export const getProfile = async (uid) => {
 }
 
 export const getLastMessages = async (chatKey, length = 15) => {
-  return firebase.database()
+  return database
     .ref(`/messages/${chatKey}`)
     .orderByKey()
     .limitToLast(length)
@@ -171,14 +176,14 @@ export const logout = async (dispatch) => {
 export const registerProfile = async (uid, data) => {
   if (!uid) return null
 
-  return firebase.database()
+  return database
     .ref(`/users/${uid}`)
     .set(data)
     .catch(error => console.log('[firebase]: registerProfile error', error))
 }
 
 export const sendMessage = async (from, chatKey, text) => {
-  const { key } = await firebase.database().ref(`/messages/${chatKey}`).push()
+  const { key } = await database.ref(`/messages/${chatKey}`).push()
   const messages = {}
 
   messages[key] = {
@@ -187,7 +192,7 @@ export const sendMessage = async (from, chatKey, text) => {
     createdAt: new Date().toISOString()
   }
 
-  return database()
+  return database
     .ref(`/messages/${chatKey}`)
     .update(messages)
     .catch(error => console.log('@tron', '[firebase]: createContact error', error))
@@ -202,7 +207,7 @@ export const signup = async (email, password) => {
 }
 
 export const subscribeToNewMessages = async (chatKey, callback) => {
-  return firebase.database()
+  return database
     .ref(`/messages/${chatKey}`)
     .orderByChild('createdAt')
     .startAt(new Date().toISOString())
@@ -210,7 +215,7 @@ export const subscribeToNewMessages = async (chatKey, callback) => {
 }
 
 export const unsubscribeToNewMessages = async (chatKey, subscriscription) => {
-  return firebase.database()
+  return database
     .ref(`/messages/${chatKey}`)
     .off('child_added', subscriscription)
 }

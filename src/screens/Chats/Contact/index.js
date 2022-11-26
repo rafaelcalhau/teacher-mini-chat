@@ -10,6 +10,7 @@ function Contact (props) {
   const handlePress = onPress || (() => null)
   const iconName = accountType === 'student' ? 'user-graduate' : 'user-tie'
   const image = props.image || require('../../../assets/alumni-avatar-small.png')
+  const thereIsLastMessage = (lastMessage?.length ?? 0) > 0
 
   return (
     <Container onPress={handlePress}>
@@ -19,16 +20,14 @@ function Contact (props) {
       </AvatarView>
       <Body>
         <Name>{name}</Name>
-        {lastMessage.length > 0 && <LastMessage>{lastMessage}</LastMessage>}
+        {thereIsLastMessage && <LastMessage>{lastMessage}</LastMessage>}
       </Body>
-      {
-        lastMessage.length > 0 && (
-          <Details>
-            <Time>lastMessage.time</Time>
-            {(newMessages && newMessages > 0) && <Badge>{newMessages}</Badge>}
-          </Details>
-        )
-      }
+      {thereIsLastMessage && (
+        <Details>
+          <Time>lastMessage.time</Time>
+          {(newMessages && newMessages > 0) && <Badge>{newMessages}</Badge>}
+        </Details>
+      )}
     </Container>
   )
 }
